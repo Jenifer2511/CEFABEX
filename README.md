@@ -20,17 +20,17 @@ npm run build
 npm run preview
 ```
 
-`npm test` runs the deterministic scene tests: image coverage, chapter progression, inward movement and the spiral-to-word transition. `npm run build` performs TypeScript validation and writes the production site to `dist/`. `npm run preview` serves that build for local verification.
+`npm test` runs four deterministic checks for chapter sequencing, inward camera travel, spiral radius and equal arc spacing. `npm run build` performs TypeScript validation and writes the production site to `dist/`. `npm run preview` serves that build for local verification.
 
 ## Experience
 
 - The user-supplied particle gimbal sits above a loader that counts from 1 to 200%.
 - Three scroll chapters change the central phrase while software imagery travels inward.
-- Continued scrolling gathers the image tunnel into a spiral, then resolves the tiles into CEFABEX.
+- Continued scrolling transitions the supplied image tunnel into the supplied arc-spaced spiral, then reveals a masked typographic CEFABEX wordmark.
 - Interactive expertise tabs, the studio’s approach, FAQs and a project brief complete the page.
 - Visitors can skip the introduction. Reduced motion replaces the extended camera journey with a static composition; unavailable WebGL falls back to local images.
 
-Three.js renders the gallery with one instanced image atlas. GSAP coordinates the scene, Lenis is the sole smooth-scroll engine, and Motion handles interface transitions. No external image or font requests are required.
+The supplied Three.js tunnel retains its floor, ceiling and wall planes. The supplied Canvas2D spiral retains its arc-length parametrisation, tangent rotation and size attenuation. GSAP coordinates the scene, Lenis is the sole smooth-scroll engine, and Motion handles interface transitions. No external image or font requests are required.
 
 ## Images
 
@@ -46,7 +46,7 @@ The generator uses the installed Playwright development dependency, Chromium at 
 
 ## Project enquiries
 
-The project dialog validates the visitor’s name, email and brief, then provides a preview, clipboard copy and a working text-file download. It does **not** send an enquiry. No company contact address or submission backend was supplied, and no delivery is simulated. Form details remain in the current browser session.
+The project dialog validates the visitor’s name, email and brief, then provides a preview, clipboard copy, text-file download and an email-composer link to cefabex.cfb@gmail.com from the supplied company PDF. The visitor must send the email from their email app; there is no server-side submission or simulated delivery. Form details remain in the current browser session.
 
 Before launch, connect the dialog to the intended enquiry endpoint or confirmed company contact destination. For an endpoint integration, keep delivery credentials server-side, validate submitted fields on the server, add abuse protection, and show success only after the endpoint confirms acceptance. Add the actual privacy notice and contact details when that delivery route is established.
 

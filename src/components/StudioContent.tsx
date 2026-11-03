@@ -137,12 +137,12 @@ export default function StudioContent({ onEnquire }: { onEnquire: (service?: str
 
     <section className="studio-contact section-shell" id="contact" aria-labelledby="contact-title">
       <Reveal><h2 id="contact-title">Have a good idea?</h2></Reveal>
-      <div className="studio-contact-bottom"><Reveal><p>Let’s give it somewhere to go.</p></Reveal><button className="studio-contact-button" onClick={() => onEnquire()}>Start a project <Arrow diagonal /></button></div>
+      <div className="studio-contact-bottom"><Reveal><p>Innovation begins with a conversation.</p></Reveal><button className="studio-contact-button" onClick={() => onEnquire()}>Start a project <Arrow diagonal /></button></div>
     </section>
     <footer className="studio-footer section-shell">
-      <div className="studio-footer-top"><p>Independent thinking.<br />Thoughtful software.</p><a href="#top" className="studio-text-link">Back to the beginning <Arrow diagonal /></a></div>
-      <p className="studio-footer-wordmark">CEFABEX</p>
-      <div className="studio-footer-bottom"><p>© {new Date().getFullYear()} CEFABEX</p><p>Websites · Apps · Digital products</p><button className="studio-footer-contact" onClick={() => onEnquire()}>Let’s talk <Arrow diagonal /></button></div>
+      <div className="studio-footer-top"><p>Tamil Nadu, India.<br />Innovation. Engineering. Growth.</p><a href="#top" className="studio-text-link">Back to the beginning <Arrow diagonal /></a></div>
+      <p className="studio-footer-wordmark">CEFABEX</p><div className="company-socials"><a href="https://www.instagram.com/cefabex.cfb" target="_blank" rel="noreferrer">Instagram</a><a href="https://www.linkedin.com/company/cefabex-innovations/" target="_blank" rel="noreferrer">LinkedIn</a></div>
+      <div className="studio-footer-bottom"><p>© {new Date().getFullYear()} CEFABEX</p><p><a href="mailto:cefabex.cfb@gmail.com">cefabex.cfb@gmail.com</a> · <a href="tel:+919699371766">+91 96993 71766</a></p><button className="studio-footer-contact" onClick={() => onEnquire()}>Let’s talk <Arrow diagonal /></button></div>
     </footer>
   </>
 }

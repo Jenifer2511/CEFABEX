@@ -1,6 +1,6 @@
 # CEFABEX image provenance
 
-All 112 gallery images are original interface studies authored for this website. They depict software interfaces: project boards, product analytics, calendars, code editors, team messaging, commerce tools, editorial websites, music players, notes, finance apps, mobile products, file management and deployment tools.
+All 112 gallery images are original interface studies authored for this website. They depict software interfaces: project boards, product analytics, calendars, mobile product concepts, team messaging, commerce tools, editorial websites, music players, notes, finance apps, mobile products, file management and deployment tools.
 
 These are concept explorations, not client projects, testimonials or evidence of delivered work. Any sample names, figures and product names exist only inside the interface studies. No third-party screenshots, stock images, customer marks or default Originkit imagery are included.
 
@@ -12,3 +12,7 @@ These are concept explorations, not client projects, testimonials or evidence of
 The studies use locally installed Geist, licensed under the SIL Open Font License by its package. All images are local and make no external media requests.
 
 To regenerate, run `node scripts/generate-assets.mjs`. The script uses the environment's Playwright installation and Chromium at `/usr/bin/chromium`, plus Pillow for resizing and atlas assembly. These paths can be changed for another machine. The generator embeds the project's installed Geist font and performs no network requests.
+
+## Supplied company profile
+
+The user supplied Page 1 Home Page.pdf (seven pages). The original CEFABEX logo (page1), journey photograph (page3), team photograph (page3), milestone photo (page4), and agricultural/IoT project photos (page5) were extracted as WebP to public/company. The site uses the logo, journey and IoT images. These are supplied company materials, not invented portfolio work. Contact details from page7 are used verbatim apart from formatting the Indian phone number with +91. Code-editor screenshot variants025–032 were replaced by mobile app concepts.

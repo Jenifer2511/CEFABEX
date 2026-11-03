@@ -8,6 +8,7 @@ import Loader from './components/Loader'
 import StudioContent from './components/StudioContent'
 import ProjectDialog from './components/ProjectDialog'
 import ArrowIcon from './components/ArrowIcon'
+import CompanyStory from './components/CompanyStory'
 import { chapterAt } from './lib/scene'
 
 gsap.registerPlugin(ScrollTrigger)
@@ -19,7 +20,7 @@ const phrases = [
 const easing = [.22, 1, .36, 1] as const
 
 function Brand() {
-  return <a href="#top" className="brand" aria-label="CEFABEX home"><svg aria-hidden="true" viewBox="0 0 32 32"><path d="M27 4H11L3 16l8 12h16V18H15l-2-2 2-2h12Z" fill="currentColor" /></svg><span>cefabex</span></a>
+  return <a href="#top" className="brand" aria-label="CEFABEX home"><img className="company-logo" src="/company/logo.webp" alt="CEFABEX" width="110" height="74" /></a>
 }
 
 export default function App() {
@@ -117,7 +118,7 @@ export default function App() {
               </AnimatePresence>
             </div>
             <AnimatePresence>{chapter === 3 && !reduced && <motion.div className="spiral-copy" initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} transition={{ duration: .6 }}><p>Every possibility.<br />Coming together.</p></motion.div>}</AnimatePresence>
-            <AnimatePresence>{chapter === 4 && !reduced && <motion.div className="brand-resolve" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} transition={{ duration: .7 }}><p>Many possibilities. One partner.</p><a className="text-action" href="#expertise">Meet CEFABEX <ArrowIcon down /></a></motion.div>}</AnimatePresence>
+            <AnimatePresence>{chapter === 4 && !reduced && <motion.div className="brand-resolve" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} transition={{ duration: .7 }}><p>Many possibilities. One partner.</p><a className="text-action" href="#company">Meet CEFABEX <ArrowIcon down /></a></motion.div>}</AnimatePresence>
             <div className="cinema-bottom">
               <a className="scroll-prompt" href="#expertise" onClick={e => { if (!reduced && chapter < 3) { e.preventDefault(); const section = sceneRef.current; if (section) lenisRef.current?.scrollTo(section.offsetTop + (section.offsetHeight - innerHeight) * [0.15, .30, .52][chapter], { duration: 1.6 }) } }}><span className="scroll-circle" aria-hidden="true">↓</span><span>{chapter < 3 ? 'Scroll into possibility' : 'Keep going. It gets good.'}</span></a>
               <div className="chapter-indicator" aria-label={`Introduction chapter ${Math.min(chapter + 1, 3)} of 3`}><span className={chapter === 0 ? 'active' : ''} /><span className={chapter === 1 ? 'active' : ''} /><span className={chapter >= 2 ? 'active' : ''} /></div>
@@ -126,6 +127,7 @@ export default function App() {
             <div className="cinema-progress"><div ref={progressBar} /></div>
           </div>
         </section>
+        <CompanyStory />
         <StudioContent onEnquire={openEnquiry} />
       </main>
     </div>

@@ -104,9 +104,9 @@ export default function ProjectDialog({ open, onClose, initialService }: Props) 
       </form>
     </> : <div className="brief-result">
       <h2 id="brief-title" ref={resultRef} tabIndex={-1}>Your project brief.</h2>
-      <p className="brief-intro">Copy or download your brief to share with the CEFABEX team. It hasn’t been sent.</p>
+      <p className="brief-intro">Open your brief in your email app, or copy or download it. Nothing is sent until you send the email.</p>
       <pre className="brief-preview">{brief}</pre>
-      <div className="brief-result-actions"><button type="button" className="brief-submit" onClick={copyBrief}>Copy enquiry <DiagonalArrow /></button><button type="button" className="brief-secondary" onClick={downloadBrief}>Download brief</button></div>
+      <div className="brief-result-actions"><button type="button" className="brief-submit" onClick={copyBrief}>Copy enquiry <DiagonalArrow /></button><button type="button" className="brief-secondary" onClick={downloadBrief}>Download brief</button><a className="brief-secondary" href={`mailto:cefabex.cfb@gmail.com?subject=${encodeURIComponent("CEFABEX project enquiry")}&body=${encodeURIComponent(brief)}`}>Open in email</a></div>
       <p className="brief-copy-status" role="status" aria-live="polite">{copyMessage}</p>
       <button type="button" className="brief-edit" onClick={() => { setPrepared(false); setCopyMessage(''); window.requestAnimationFrame(() => nameRef.current?.focus()) }}>Edit your brief</button>
     </div>}

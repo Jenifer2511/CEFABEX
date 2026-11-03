@@ -281,3 +281,43 @@
     .phrase-detail, .cinema-progress, .chapter-indicator { display: none; }
   }
 }
+/* Supplied Originkit scenes and company assets from the supplied company PDF. */
+.reference-layer { position:absolute; inset:0; width:100%; height:100%; transform-origin:center; }
+.reference-spiral { opacity:0; }
+.reference-layer canvas { width:100%; height:100%; }
+.cinematic-name { position:absolute; left:0; right:0; top:39%; text-align:center; opacity:0; will-change:transform,opacity; }
+.cinematic-name > span { font-size:clamp(48px,16vw,256px); font-weight:500; line-height:1; letter-spacing:-.075em; display:block; }
+.reveal-caption { font-size:14px; margin-top:24px; letter-spacing:0; }
+.company-logo { width:110px; height:74px; object-fit:contain; }
+.company-story { padding-block:112px; background:#f3f4f3; }
+.company-intro { display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:end; margin-bottom:64px; }
+.company-intro h2 { font-size:72px; line-height:1; letter-spacing:-.065em; }
+.company-intro p { font-size:20px; max-width:580px; }
+.company-ecosystem { display:grid; grid-template-columns:1fr 1fr; gap:48px; }
+.company-ecosystem img { width:100%; height:340px; object-fit:cover; }
+.company-ecosystem h3 { font-size:30px; letter-spacing:-.04em; margin-top:24px; }
+.company-ecosystem p { max-width:560px; margin-top:16px; }
+.company-capabilities { display:grid; grid-template-columns:1fr 1fr; gap:48px; margin-top:64px; }
+.company-capabilities h3 { font-size:30px; letter-spacing:-.04em; }
+.company-capabilities p { font-size:18px; }
+.company-socials { display:flex; gap:32px; margin-bottom:32px; }
+@media(max-width:767px){
+ .company-logo { width:86px; height:58px; }
+ .company-story { padding-block:64px; }
+ .company-intro,.company-ecosystem,.company-capabilities { grid-template-columns:1fr; gap:32px; }
+ .company-intro h2 { font-size:48px; }
+ .company-intro p { font-size:16px; }
+ .company-ecosystem img { height:260px; }
+ .company-ecosystem { gap:48px; }
+ .cinematic-name { top:40%; }
+ .cinematic-name > span { font-size:16vw; }
+ .reveal-caption { font-size:12px; }
+}
+.cinematic-word { overflow:hidden; }
+.name-letter { display:inline-block; will-change:transform; }
+/* Neutral backing keeps chapter copy readable against the supplied tunnel walls. */
+.hero-title { width:fit-content; margin-inline:auto; background:#ffffffed; }
+.hero-description { width:fit-content; margin-inline:auto; padding:8px 12px; background:#fffffff5; }
+.phrase-detail { width:fit-content; margin-inline:auto; padding:4px 8px; background:#fffffff5; }
+.cinematic-name > span { letter-spacing:-.05em; }
+.brand-resolve > p { display:none; }

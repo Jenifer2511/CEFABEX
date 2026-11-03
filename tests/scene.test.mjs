@@ -1,42 +1,36 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
-import { WORD_POINTS, IMAGE_COUNT, chapterAt, tileAt, wordPoints } from '../src/lib/scene.ts'
+import {chapterAt,tunnelDepth,scenePhases} from '../src/lib/scene.ts'
+import {createSpiral} from '../src/lib/spiral.ts'
 
-test('Every CEFABEX letter is formed by image tiles', () => {
-  assert.ok(WORD_POINTS.length >= IMAGE_COUNT)
-  assert.deepEqual([...new Set(WORD_POINTS.map(p => p.letter))], ['C','E','F','A','B','X'])
-  assert.equal(wordPoints('Q').length, 0)
-  for (const aspect of [.46, 1, 1.6, 2.3]) {
-    const final = WORD_POINTS.map((_, i) => tileAt(i, 1, aspect))
-    assert.ok(final.every(t => t.w > 0 && t.h > 0 && t.alpha === 1))
-    assert.ok(final.every(t => t.rx === 0 && t.ry === 0 && t.rz === 0))
-    assert.ok(final.every(t => Number.isFinite(t.x + t.y + t.z)))
-    // Every tile in the resolved word occupies the same focal plane.
-    assert.equal(new Set(final.map(t => t.z)).size, 1)
-  }
+test('Three phrases lead to the supplied spiral and polished name reveal',()=>{
+ assert.deepEqual([0,.14,.3,.5,.8,1].map(chapterAt),[0,1,2,3,4,4])
+ assert.equal(scenePhases(0).tunnelOpacity,1)
+ assert.equal(scenePhases(.7).spiralOpacity,1)
+ assert.equal(scenePhases(.95).spiralOpacity,0)
+ assert.equal(scenePhases(.95).nameOpacity,1)
 })
-
-test('Atlas mapping uses all 112 original images', () => {
-  const images = new Set(WORD_POINTS.map((_, i) => (i * 37) % IMAGE_COUNT))
-  assert.equal(images.size, IMAGE_COUNT)
+test('Tunnel travel follows scroll inward and reverses precisely',()=>{
+ assert.ok(tunnelDepth(.4)<tunnelDepth(.2))
+ assert.equal(tunnelDepth(.2),-14)
+ assert.equal(tunnelDepth(0),0)
 })
-
-test('Scroll advances three phrases, then spiral, then identity', () => {
-  assert.deepEqual([0,.14,.3,.5,.8,1].map(chapterAt),[0,1,2,3,4,4])
+test('Supplied spiral follows linear radius from outer edge to center',()=>{
+ const {spiral,arcToN}=createSpiral(3.5)
+ for(const s of [0,.1,.3,.5,.9,1]){
+  const n=arcToN(s);const pt=spiral(n,100)
+  assert.ok(Number.isFinite(pt.x+pt.y))
+  assert.ok(Math.abs(Math.hypot(pt.x,pt.y)-100*(1-n))<.001)
+ }
+ assert.equal(arcToN(0),0)
+ assert.ok(Math.abs(arcToN(1)-1)<.0001)
 })
-
-test('Tunnel images move inward as the visitor advances', () => {
-  const start = tileAt(14,.01,1.6)
-  const later = tileAt(14,.04,1.6)
-  assert.ok(later.z < start.z)
-})
-
-test('Spiral to word morph is continuous and reversible', () => {
-  for (const p of [.52,.69,.76,.94,1]) {
-    const before = tileAt(31,p-.00001,1.6)
-    const after = tileAt(31,p+.00001,1.6)
-    assert.ok(Math.abs(before.x-after.x) < .02)
-    assert.ok(Math.abs(before.y-after.y) < .02)
-    assert.deepEqual(tileAt(31,p,1.6), tileAt(31,p,1.6))
-  }
+test('Arc parametrisation spaces images uniformly rather than bunching at the center',()=>{
+ const {spiral,arcToN}=createSpiral(3.5)
+ const distances=[]
+ for(let i=0;i<90;i++){
+  const a=spiral(arcToN(i/100),100),b=spiral(arcToN((i+1)/100),100)
+  distances.push(Math.hypot(b.x-a.x,b.y-a.y))
+ }
+ assert.ok(Math.max(...distances)/Math.min(...distances)<1.05)
 })
