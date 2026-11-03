@@ -1,11 +1,13 @@
 # Current verification
 
-- Production TypeScript/Vite build passes.
-- Six real node:test cases pass:15 second tunnel timing; staggered gathering;10 second trail timing; shared bridge/glyph-route following; finite geometry; complete glyph ordering.
-- Full real-time Chromium test reached tunnel, gathering, trail, writing, image-word hold and final text stages at their configured times.
-- Pause/resume, actual outgoing-page curl navigation, mobile enquiry validation/download and reduced-motion bypass passed with no console errors.
-- Every About, Services, Projects, Contact and project-detail route passed desktop 1440 px and mobile 390 px checks with no horizontal overflow or page errors.
-- Visually inspected the completed image-word, final ink text and intermediate curled-page frames. Corrected high-resolution glyph sampling after visual review.
-- The optional actual-video recorder is supplied; recording is not treated as a prerequisite or claimed unless the MP4 exists.
+The current scroll revision is checked with:
+
+- `npm test`: six passing tests for scroll-stage proportions, staggered gathering, inward trail travel, shared follower paths, finite forward/reverse geometry and complete glyph ordering.
+- `npm run typecheck` and `npm run build`: production TypeScript and Vite checks.
+- `npm run test:browser`: Chromium wheel input advances the gallery; reverse wheel input reverses it; stopping leaves both the progress value and rendered canvas unchanged. The test reaches tunnel, gathering, trail, writing, image-word hold and solid-text stages by scrolling.
+- The same browser check verifies no video or playback buttons, undeformed native company photos, a page curl still visible after one second and lasting approximately 3.2 seconds, tablet/phone layouts without horizontal overflow, reduced motion and enquiry validation.
+- `node scripts/verify-pages.mjs`: checks all nine About, Services, Projects, Contact and project-detail paths at 1440 px and 390 px widths.
+
+Screenshots are stored in the ignored artifacts directory. The opening, trail, image-word, final text, flat company photograph and page-curl frames are inspected directly. Browser checks use Chromium's software WebGL renderer; physical-device GPU performance has not been measured.
 
 The taste skill's bundled inspector was unavailable; no inspector score or award recognition is claimed. Direct Chromium renders and interaction checks are the evidence.

@@ -1,16 +1,24 @@
-# Timed cinematic director
+# Scroll-driven image journey
 
-The intro is time-based, not mapped to scroll distance. It starts after the loader has fully exited, pauses for hidden/offscreen content, menus, enquiries or the Pause control, and can replay or be skipped.
+The gallery responds to scroll position throughout. It has no elapsed-time driver, playback controls or video. Lenis owns smooth scrolling; GSAP ScrollTrigger maps the sticky section's scroll range to `progress.current`. The WebGL renderer reads that value. Identical progress produces identical geometry, and idle frames are not rendered again. Pointer movement does not alter image positions.
 
-- 0–15 seconds: continuous inward tunnel travel. Three phrases appear at 0, 5 and10 seconds.
-- 15–20 seconds: images leave the tunnel in a staggered 5 second gathering wave.
-- 20–30 seconds: the assembled trail advances inward continuously for10 seconds.
-- 30–38 seconds: every image follows the same cubic path through a connecting bridge and then the ordered glyph route. Followers travel through one another’s earlier positions instead of independently interpolating into letter targets.
-- 38–39 seconds: images hold their letter arrangement.
-- 39–40.5 seconds: the same material darkens into ink; a high-resolution glyph mask trims the same mesh into smooth text.
+The constants in `src/lib/journey.ts` describe relative scroll units:
 
-The gallery retains one instanced mesh, fixed image IDs and one112-image atlas throughout. The supplied Poster Page Curl’s cylindrical roll and lifted-flap shader is adapted for navigation. It samples the actual outgoing page captured locally, uses neutral paper shading and peels away to the new route; no original poster artwork or lavender identity is used. Reduced motion or unavailable WebGL uses immediate navigation.
+| Interval | Scene behavior |
+| --- | --- |
+| 0–15 | Inward tunnel travel; phrases change at 0, 5 and 10 |
+| 15–20 | The existing image cards gather in a staggered wave |
+| 20–30 | The common trail travels inward |
+| 30–38 | Every follower traverses the same curved bridge and ordered glyph route |
+| 38–39 | Image cards hold their CEFABEX arrangement |
+| 39–40.5 | The same material darkens, and a high-resolution glyph mask resolves the word |
 
-Across all routes, a shared WebGL media renderer applies gentle depth curvature and scroll response to company photographs and project previews. Typography and supporting content enter with GSAP word masks and staggered reveals. Native semantic content and static images remain the fallback. Context loss restores native media.
+These are not seconds. Visitors determine the pace and can reverse the sequence. The desktop section spans eight viewport heights; small screens use seven. Reduced motion bypasses the long section, loader, WebGL gallery and smooth scrolling.
 
-The brochure remains the source for company details, original imagery, project areas and contact destinations.
+One instanced mesh retains fixed image identities. Cards use planar geometry without vertex displacement. The 112 software interface studies are packed into a shared atlas: 7168 × 2560 on supported desktop devices, 3584 × 1280 otherwise. Mipmaps and anisotropic filtering improve readability at oblique tunnel angles.
+
+Company photographs and project previews remain native images. The global photo-deformation renderer has been removed. There is no bulging, pointer deformation or hover enlargement. GSAP handles masked heading entrances and short supporting-copy reveals; Motion handles phrases, menus, previews and dialogs.
+
+Navigation uses the supplied Poster Page Curl's cylindrical WebGL shader, adapted to the actual outgoing page. A page turn takes 3.2 seconds. Fold travel is calibrated to the viewport diagonal so it remains visible during the turn. Incoming titles enter after the peel has begun revealing the new route. Reduced motion and unavailable WebGL use immediate navigation.
+
+Company copy, project areas, logo and photographs remain sourced from the supplied brochure.

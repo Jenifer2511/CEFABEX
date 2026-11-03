@@ -6,6 +6,7 @@ These are concept explorations, not client projects, testimonials or evidence of
 
 - `public/images/image-001.webp` through `image-112.webp`: 112 distinct studies, 640 × 400 pixels.
 - `public/images/atlas.webp`: all 112 images in a 14-column × 8-row grid, 3584 × 1280 pixels. Each cell is 256 × 160 pixels; row-major order, starting at image 001 in the top-left corner.
+- `public/images/atlas-hd.webp`: the same images and grid, 7168 × 2560 pixels, with 512 × 320 cells for supported desktop devices. This is generated from the same 640 × 400 image files.
 - `web-preview.webp`, `mobile-preview.webp`, `software-preview.webp`: selected full-resolution studies, 1280 × 800 pixels.
 - `public/social-cover.webp`: original typographic social sharing cover, 1200 × 750 pixels.
 

@@ -31,13 +31,13 @@ export default function App() {
   const [started,setStarted]=useState(previouslyLoaded.current)
   const [ready, setReady] = useState(false)
   const [chapter, setChapter] = useState(0)
-  const [paused,setPaused]=useState(false)
-  const [elapsed,setElapsed]=useState(0)
   const [menu, setMenu] = useState(false)
   const [enquiry, setEnquiry] = useState(false)
   const [service, setService] = useState<string>()
   const progress = useRef(0)
   const sceneRef = useRef<HTMLElement>(null)
+  const stageRef = useRef<HTMLDivElement>(null)
+  const chapterRef=useRef(0)
   const progressBar = useRef<HTMLDivElement>(null)
   const lenisRef = useRef<Lenis | null>(null)
   const complete = useCallback(() => {sessionStorage.setItem('cefabex-ready','1');setLoaded(true)}, [])
@@ -74,23 +74,18 @@ export default function App() {
 
   useEffect(() => {
     if (!sceneRef.current || reduced || !loaded || !started) return
-    let visible=true,last=performance.now(),uiTime=-1
-    const observer=new IntersectionObserver(([entry])=>{visible=entry.isIntersecting;last=performance.now()},{threshold:.2})
-    observer.observe(sceneRef.current)
-    const tick=()=>{
-      const now=performance.now(),dt=(now-last)/1000;last=now
-      if(paused||menu||enquiry||document.hidden||!visible)return
-      progress.current=Math.min(JOURNEY.duration,progress.current+dt)
-      setChapter(current=>{const next=journeyChapter(progress.current);return current===next?current:next})
-      const rounded=Math.floor(progress.current*2)/2
-      if(rounded!==uiTime){uiTime=rounded;setElapsed(rounded)}
-      progressBar.current?.style.setProperty('transform',`scaleX(${progress.current/JOURNEY.duration})`)
+    const update=(value:number)=>{
+      progress.current=value*JOURNEY.span
+      const stage=stageRef.current
+      if(stage){stage.dataset.journeyPosition=String(progress.current);stage.dataset.scrollProgress=String(value);stage.dataset.phase=journeyPhase(progress.current)}
+      const next=journeyChapter(progress.current)
+      if(next!==chapterRef.current){chapterRef.current=next;setChapter(next)}
+      progressBar.current?.style.setProperty('transform',`scaleX(${value})`)
     }
-    const visibility=()=>{last=performance.now()}
-    document.addEventListener('visibilitychange',visibility)
-    gsap.ticker.add(tick)
-    return()=>{document.removeEventListener('visibilitychange',visibility);gsap.ticker.remove(tick);observer.disconnect()}
-  },[reduced,loaded,started,paused,menu,enquiry])
+    const trigger=ScrollTrigger.create({trigger:sceneRef.current,start:'top top',end:'bottom bottom',onUpdate:self=>update(self.progress),onRefresh:self=>update(self.progress)})
+    document.fonts.ready.then(()=>ScrollTrigger.refresh())
+    return()=>trigger.kill()
+  },[reduced,loaded,started])
 
   useEffect(() => {
     if (!menu) return
@@ -114,8 +109,8 @@ export default function App() {
         <p>Thoughtful design.<br />Exceptional engineering.</p>
       </motion.nav>}</AnimatePresence>
       <main inert={menu}>
-        <section ref={sceneRef} id="top" className={`cinema timed-cinema ${reduced ? 'is-reduced' : ''}`} aria-label="CEFABEX introduction">
-          <div className="cinema-stage" data-chapter={chapter} data-elapsed={elapsed} data-phase={journeyPhase(elapsed)}>
+        <section ref={sceneRef} id="top" className={`cinema scroll-cinema ${reduced ? 'is-reduced' : ''}`} aria-label="CEFABEX introduction">
+          <div ref={stageRef} className="cinema-stage" data-chapter={chapter} data-journey-position="0" data-scroll-progress="0" data-phase="tunnel">
             <GalleryTunnel progress={progress} reduced={reduced} onReady={onReady} />
             <div className="hero-center">
               <h1 className="sr-only">CEFABEX. Websites, apps and software. Build what comes next.</h1>
@@ -130,7 +125,7 @@ export default function App() {
             <AnimatePresence>{chapter === 3 && !reduced && <motion.div className="spiral-copy" initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} transition={{ duration: .6 }}><p>A thousand possibilities.<br />One continuous thread.</p></motion.div>}</AnimatePresence>
             <AnimatePresence>{chapter === 4 && !reduced && <motion.div className="brand-resolve" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} transition={{ duration: .7 }}><p>Many possibilities. One partner.</p><a className="text-action" href="#company">Meet CEFABEX <ArrowIcon down /></a></motion.div>}</AnimatePresence>
             <div className="cinema-bottom">
-              {!reduced ? <div className="journey-controls"><button className="journey-toggle" onClick={()=>{if(progress.current>=JOURNEY.duration){progress.current=0;setElapsed(0);setChapter(0);setPaused(false)}else setPaused(!paused)}}>{elapsed>=JOURNEY.duration?'Replay journey':paused?'Play journey':'Pause journey'}</button><span className="journey-time">{Math.floor(elapsed)} / {JOURNEY.duration}s</span></div> : <a className="text-action" href="#company">Explore CEFABEX <ArrowIcon down/></a>}
+              <a className="scroll-prompt" href="#company"><span className="scroll-circle" aria-hidden="true">↓</span><span>Scroll to explore</span></a>
               <div className="chapter-indicator" aria-label={`Introduction chapter ${Math.min(chapter + 1, 3)} of 3`}><span className={chapter === 0 ? 'active' : ''} /><span className={chapter === 1 ? 'active' : ''} /><span className={chapter >= 2 ? 'active' : ''} /></div>
               <a className="skip-intro" href="#company">Skip the journey <ArrowIcon /></a>
             </div>

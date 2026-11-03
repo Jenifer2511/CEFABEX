@@ -5,6 +5,7 @@ import App from './App'
 import CompanyPages from './CompanyPages'
 import {createPageCurl} from './lib/pageCurl'
 import SiteMotion from './components/SiteMotion'
+import {PAGE_TURN} from './lib/motionConfig'
 
 export default function SiteRouter(){
  const [path,setPath]=useState(location.pathname)
@@ -19,16 +20,15 @@ export default function SiteRouter(){
    let snapshot:HTMLCanvasElement|null=null
    if(!reduce){
     document.documentElement.classList.add('navigation-pending')
-    document.getElementById('site-content')?.classList.add('capturing-page')
     try{snapshot=await Promise.race([toCanvas(document.getElementById('site-content')!,{width:innerWidth,height:innerHeight,pixelRatio:Math.min(devicePixelRatio,1.25),backgroundColor:'#ffffff',cacheBust:false,style:{transform:`translateY(${-scrollY}px)`,transformOrigin:'top left'},filter:node=>!(node instanceof HTMLElement&&node.hasAttribute('data-transition-ignore'))}),new Promise<null>(resolve=>setTimeout(()=>resolve(null),2500))])}catch{snapshot=null}
    }
    let curl:ReturnType<typeof createPageCurl>=null
    if(snapshot&&canvas.current){try{curl=createPageCurl(canvas.current,snapshot);curl?.render(0)}catch{curl=null}}
+   document.documentElement.classList.toggle('is-page-turning',Boolean(curl))
    if(!pop)history.pushState({},'',url.pathname+url.search+url.hash)
    setTurning(Boolean(curl));setPath(url.pathname);window.scrollTo(0,0)
    document.documentElement.classList.remove('navigation-pending')
-   document.getElementById('site-content')?.classList.remove('capturing-page')
-   if(curl){const state={p:0};gsap.to(state,{p:1,duration:1.35,ease:'power3.inOut',onUpdate:()=>curl?.render(state.p),onComplete:()=>{curl?.dispose();setTurning(false);locked.current=false}})}
+   if(curl){const state={p:0};gsap.to(state,{p:1,duration:PAGE_TURN.duration,ease:'power2.inOut',onUpdate:()=>curl?.render(state.p),onComplete:()=>{curl?.dispose();document.documentElement.classList.remove('is-page-turning');setTurning(false);locked.current=false}})}
    else{locked.current=false}
    if(url.hash)requestAnimationFrame(()=>document.querySelector(url.hash)?.scrollIntoView())
   }

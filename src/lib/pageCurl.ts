@@ -225,5 +225,5 @@ export function createPageCurl(canvas:HTMLCanvasElement,front:HTMLCanvasElement)
  gl.uniform3f(loc('uL1'),Math.sin(lift),Math.cos(lift),lift)
  gl.uniform4f(loc('uK2'),-.707,.707,-10,.01);gl.uniform4f(loc('uL2'),0,1,0,1)
  gl.uniform4f(loc('uShade'),.016,.32,.2,.04);gl.uniform4f(loc('uLook'),.008,.3,.05,.1);gl.uniform3f(loc('uFx'),0,0,0);gl.uniform1f(loc('uFib'),1200)
- return {render:(p:number)=>{canvas.dataset.curlProgress=String(p);gl.clearColor(0,0,0,0);gl.clear(gl.COLOR_BUFFER_BIT);gl.uniform4f(loc('uK1'),.707106,-.707106,p*(w/h+1.5),.085+p*.025);gl.drawArrays(gl.TRIANGLES,0,6)},dispose:()=>{gl.deleteTexture(texture);gl.deleteBuffer(buffer);gl.deleteVertexArray(vao);gl.deleteProgram(program);gl.deleteShader(vs);gl.deleteShader(fs)}}
+ return {render:(p:number)=>{canvas.dataset.curlProgress=String(p);gl.clearColor(0,0,0,0);gl.clear(gl.COLOR_BUFFER_BIT);gl.uniform4f(loc('uK1'),.707106,-.707106,p*((w/h+1)*Math.SQRT1_2+.14),.085+p*.025);gl.drawArrays(gl.TRIANGLES,0,6)},dispose:()=>{gl.deleteTexture(texture);gl.deleteBuffer(buffer);gl.deleteVertexArray(vao);gl.deleteProgram(program);gl.deleteShader(vs);gl.deleteShader(fs)}}
 }

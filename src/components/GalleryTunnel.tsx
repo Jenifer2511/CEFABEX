@@ -113,21 +113,24 @@ export default function GalleryTunnel({ progress, reduced, onReady }: Props) {
     mesh.instanceMatrix.setUsage(THREE.DynamicDrawUsage)
     scene.add(mesh)
     let texture: THREE.Texture | undefined
-    new THREE.TextureLoader().load('/images/atlas.webp', tex => {
+    const atlasPath=innerWidth>=1024&&renderer.capabilities.maxTextureSize>=8192?'/images/atlas-hd.webp':'/images/atlas.webp'
+    new THREE.TextureLoader().load(atlasPath, tex => {
       if (!alive) { tex.dispose(); return }
       texture = tex
       tex.colorSpace = THREE.SRGBColorSpace
-      tex.minFilter = THREE.LinearFilter
+      tex.minFilter = THREE.LinearMipmapLinearFilter
+      tex.anisotropy=Math.min(8,renderer.capabilities.getMaxAnisotropy())
       tex.magFilter = THREE.LinearFilter
-      tex.generateMipmaps = false
+      tex.generateMipmaps = true
       uniforms.atlas.value = tex
       renderer.compile(scene, camera)
       readyRef.current()
     }, undefined, () => { if (alive) { setFallback(true); readyRef.current() } })
     const dummy = new THREE.Object3D()
-    const pointer = { x: 0, y: 0, tx: 0, ty: 0 }
     let visible = true
+    let lastRendered=-1
     const resize = () => {
+      lastRendered=-1
       const w = canvas.clientWidth || innerWidth
       const h = canvas.clientHeight || innerHeight
       camera.aspect = w / h
@@ -141,24 +144,14 @@ export default function GalleryTunnel({ progress, reduced, onReady }: Props) {
     resize()
     const observer = new IntersectionObserver(([entry]) => { visible = entry.isIntersecting })
     observer.observe(canvas)
-    const move = (event: PointerEvent) => {
-      if (event.pointerType !== 'mouse') return
-      pointer.tx = (event.clientX / innerWidth - .5) * .5
-      pointer.ty = (event.clientY / innerHeight - .5) * .35
-    }
-    const leave = () => { pointer.tx = 0; pointer.ty = 0 }
-    let lastRendered=-1
     const render = () => {
       if (!visible || document.hidden || !uniforms.atlas.value) return
       const p = progress.current
-      if(p>=40.5&&p===lastRendered)return
+      if(p===lastRendered)return
       lastRendered=p
-      pointer.x += (pointer.tx - pointer.x) * .035
-      pointer.y += (pointer.ty - pointer.y) * .035
-      const form = smooth(30,38,p)
       for (let i = 0; i < count; i++) {
         const tile = journeyTile(i,count,p,camera.aspect,route)
-        dummy.position.set(tile.x + pointer.x * (1 - form), tile.y - pointer.y * (1 - form), tile.z)
+        dummy.position.set(tile.x, tile.y, tile.z)
         dummy.rotation.set(tile.rx, tile.ry, tile.rz)
         dummy.scale.set(tile.w, tile.h, 1)
         dummy.updateMatrix()
@@ -174,15 +167,11 @@ export default function GalleryTunnel({ progress, reduced, onReady }: Props) {
     }
     const contextLost = (event: Event) => { event.preventDefault(); setFallback(true); readyRef.current() }
     canvas.addEventListener('webglcontextlost', contextLost)
-    window.addEventListener('pointermove', move, { passive: true })
-    window.addEventListener('blur', leave)
     gsap.ticker.add(render)
     return () => {
       alive = false
       gsap.ticker.remove(render)
       ro.disconnect(); observer.disconnect()
-      window.removeEventListener('pointermove', move)
-      window.removeEventListener('blur', leave)
       canvas.removeEventListener('webglcontextlost', contextLost)
       geometry.dispose(); material.dispose(); texture?.dispose(); maskTexture.dispose(); renderer.dispose()
     }

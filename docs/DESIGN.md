@@ -2,7 +2,7 @@
 
 On this page, CEFABEX's many software possibilities become a spatial journey into its own name.
 
-The requested sequence is the composition: a particle gimbal above a 1–200% loader; three typographic chapters; continuous inward travel; a gathering spiral; a staggered typographic CEFABEX reveal. Scroll is reversible and native touch behavior is preserved. Navigation and a skip link bypass the long introduction.
+The requested sequence is the composition: a particle gimbal above a 1–200% loader; three typographic chapters; inward tunnel travel; a gathering snake-like trail; and images following one route into CEFABEX before resolving into text. The entire gallery is controlled by reversible scroll input. Navigation and a skip link bypass the long introduction.
 
 ## Art direction
 
@@ -14,7 +14,7 @@ UI/UX Pro Max's verified `software agency cinematic minimal` design-system searc
 
 1. Opening: “Let's start.” The company builds websites, apps and software. Scroll into its possibilities or start a project.
 2. “Think beyond.” / “Build what's next.” Software takes an idea through exploration into a tangible product.
-3. Supplied spiral → masked CEFABEX wordmark: many possibilities, one partner.
+3. The tunnel's existing images gather into one inward-moving trail and follow its route into the CEFABEX wordmark: many possibilities, one partner.
 4. Expertise: explore web experiences, mobile applications and custom software. Each tab explains the output and updates the original interface study.
 5. Approach: listen, make it real, keep it moving. Word-level reveal: “Good software starts with people. And grows with you.”
 6. Questions: scope, early ideas, existing products, technology, timing/cost, post-launch support. Answers make no unsupported guarantees.
@@ -25,7 +25,11 @@ Long-form story layout is chosen to support the requested cinematic introduction
 
 ## Motion ownership
 
-GSAP + ScrollTrigger owns scroll progress. Lenis is the sole smooth-scroll engine and connects to the same GSAP ticker. The uploaded Three.js tunnel owns its wall/floor/ceiling camera travel. The uploaded Canvas2D spiral owns arc-spaced, tangent-aligned image motion. A compositing layer hands off between them and the staggered DOM wordmark. Motion owns phrase/menu transitions, expertise previews and content reveals. No two engines control the same element's transform. The user-supplied Gallery Tunnel inspired the spatial sequence; the user-supplied Particle Gimbal is adapted for the monochrome loader.
+GSAP + ScrollTrigger owns gallery progress. Lenis is the sole smooth-scroll engine and connects to the same GSAP ticker. One Three.js instanced mesh owns tunnel positions, trail gathering, shared-route following and the glyph-mask resolve. The gallery has no playback clock or separate composited spiral. All image cards are planar, and photographs elsewhere remain native undeformed images. Motion owns phrase/menu/dialog transitions and expertise previews; GSAP owns masked headings and short supporting-copy reveals. No two engines control the same element's transform. The user-supplied Gallery Tunnel inspired the spatial sequence; the user-supplied Particle Gimbal is adapted for the monochrome loader.
+
+Internal route changes use the supplied Poster Page Curl shader on a locally captured outgoing viewport. The curl lasts 3.2 seconds, with controlled diagonal travel and delayed incoming titles. Reduced motion bypasses this transition.
+
+The latest motion revision applies the installed Awwwards, Motion, animate, Impeccable and Web Interface Guidelines guidance. UI/UX Pro Max searches for scroll scrubbing and user control reinforce direct scroll ownership and reduced-motion fallbacks. The literal title “AI design guidelines” was not available; the installed Web Interface Guidelines and its current upstream rules were used. Impeccable's context command could not install its runtime in the environment, so existing project documentation was read directly and its animate, quieter and craft-floor references were applied. The user's explicit scroll and flat-image requirements take priority over decorative effects.
 
 Reduced motion bypasses the loader, smooth scrolling, WebGL and the long hold, rendering a short static introduction with software image fallbacks. WebGL failure/context loss also falls back to local image stills. The render loop skips hidden documents and offscreen scenes; cleanup disposes listeners, observers, textures, geometries, materials and renderer.
 

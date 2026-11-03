@@ -107,7 +107,7 @@ export default function StudioContent({ onEnquire }: { onEnquire: (service?: str
         </div>
         <div className={`studio-preview studio-preview-${active}`}>
           <AnimatePresence mode="wait" initial={false}>
-            <motion.figure key={active} initial={reduced ? false : { opacity: 0, scale: 0.96, rotate: -2 }} animate={{ opacity: 1, scale: 1, rotate: 0 }} exit={{ opacity: 0, scale: reduced ? 1 : 1.02 }} transition={{ duration: 0.5, ease }}>
+            <motion.figure key={active} initial={reduced ? false : { opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} transition={{ duration: 0.5, ease }}>
               <img src={service.image} alt={service.alt} loading="lazy" width="1200" height="800" />
               <figcaption>Interface explorations by CEFABEX</figcaption>
             </motion.figure>

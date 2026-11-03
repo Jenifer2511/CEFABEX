@@ -1,5 +1,6 @@
+// Scroll timeline units only: these values are NOT elapsed seconds.
 import {clamp,mix,smooth} from './scene.ts'
-export const JOURNEY={tunnelEnd:15,gatherEnd:20,trailEnd:30,writeEnd:38,inkStart:39,duration:40.5} as const
+export const JOURNEY={tunnelEnd:15,gatherEnd:20,trailEnd:30,writeEnd:38,inkStart:39,span:40.5} as const
 export type Position={x:number;y:number;z:number}
 export type GlyphPoint={x:number;y:number}
 export function journeyPhase(t:number){return t<15?'tunnel':t<20?'gather':t<30?'trail':t<38?'write':t<39?'hold':'ink'}

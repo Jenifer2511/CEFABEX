@@ -68,16 +68,19 @@ from PIL import Image
 from pathlib import Path
 p=Path(${JSON.stringify(out)})
 atlas=Image.new('RGB',(3584,1280),'white')
+atlas_hd=Image.new('RGB',(7168,2560),'white')
 for i in range(112):
  source=p/f'source-{i+1:03}.png'
  im=Image.open(source).convert('RGB')
  im.resize((640,400),Image.Resampling.LANCZOS).save(p/f'image-{i+1:03}.webp',quality=85)
  atlas.paste(im.resize((256,160),Image.Resampling.LANCZOS),((i%14)*256,(i//14)*160))
+ atlas_hd.paste(im.resize((512,320),Image.Resampling.LANCZOS),((i%14)*512,(i//14)*320))
  if i in [50,90,75]:
   name={50:'web-preview',90:'mobile-preview',75:'software-preview'}[i]
   im.save(p/f'{name}.webp',quality=92)
  source.unlink()
 atlas.save(p/'atlas.webp',quality=90)
+atlas_hd.save(p/'atlas-hd.webp',quality=92)
 Image.open(p/'social-source.png').convert('RGB').resize((1200,750),Image.Resampling.LANCZOS).save(p.parent/'social-cover.webp',quality=90)
 (p/'social-source.png').unlink()
 print('Saved 112 original images, three previews, atlas and social cover.')
