@@ -1,36 +1,20 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
-import {chapterAt,tunnelDepth,scenePhases} from '../src/lib/scene.ts'
-import {createSpiral} from '../src/lib/spiral.ts'
-
-test('Three phrases lead to the supplied spiral and polished name reveal',()=>{
- assert.deepEqual([0,.14,.3,.5,.8,1].map(chapterAt),[0,1,2,3,4,4])
- assert.equal(scenePhases(0).tunnelOpacity,1)
- assert.equal(scenePhases(.7).spiralOpacity,1)
- assert.equal(scenePhases(.95).spiralOpacity,0)
- assert.equal(scenePhases(.95).nameOpacity,1)
-})
-test('Tunnel travel follows scroll inward and reverses precisely',()=>{
- assert.ok(tunnelDepth(.4)<tunnelDepth(.2))
- assert.equal(tunnelDepth(.2),-14)
- assert.equal(tunnelDepth(0),0)
-})
-test('Supplied spiral follows linear radius from outer edge to center',()=>{
- const {spiral,arcToN}=createSpiral(3.5)
- for(const s of [0,.1,.3,.5,.9,1]){
-  const n=arcToN(s);const pt=spiral(n,100)
-  assert.ok(Number.isFinite(pt.x+pt.y))
-  assert.ok(Math.abs(Math.hypot(pt.x,pt.y)-100*(1-n))<.001)
+import {organicTile} from '../src/lib/organic.ts'
+import {chapterAt} from '../src/lib/scene.ts'
+test('One image identity reaches its assigned word position',()=>{
+ for(const aspect of [.46,1,1.6])for(let i=0;i<336;i++){
+ const target={x:i/336-.5,y:.04};const tile=organicTile(i,336,1,aspect,target)
+ assert.ok(Math.abs(tile.x-target.x*tile.width)<1e-10);assert.ok(Math.abs(tile.y-target.y*tile.width)<1e-10);assert.ok(Math.abs(tile.z+4)<1e-10);assert.equal(tile.alpha,1)
  }
- assert.equal(arcToN(0),0)
- assert.ok(Math.abs(arcToN(1)-1)<.0001)
 })
-test('Arc parametrisation spaces images uniformly rather than bunching at the center',()=>{
- const {spiral,arcToN}=createSpiral(3.5)
- const distances=[]
- for(let i=0;i<90;i++){
-  const a=spiral(arcToN(i/100),100),b=spiral(arcToN((i+1)/100),100)
-  distances.push(Math.hypot(b.x-a.x,b.y-a.y))
+test('The gathering trail and word assembly are continuous across phase boundaries',()=>{
+ for(const p of [.48,.55,.62,.67,.77,.9,.985])for(const i of [0,60,140,260]){
+ const a=organicTile(i,336,p-.000001,1.6,{x:.1,y:0}),b=organicTile(i,336,p+.000001,1.6,{x:.1,y:0})
+ assert.ok(Math.hypot(a.x-b.x,a.y-b.y,a.z-b.z)<.01)
  }
- assert.ok(Math.max(...distances)/Math.min(...distances)<1.05)
 })
+test('Images retain finite geometry throughout forward and reverse scrubbing',()=>{
+ for(let k=0;k<=100;k++)for(let i=0;i<336;i+=5){const t=organicTile(i,336,k/100,.46,{x:.1,y:0});assert.ok(Object.values(t).every(Number.isFinite));assert.ok(t.w>0&&t.h>0)}
+})
+test('Narrative keeps its three phrases before gathering and identity',()=>assert.deepEqual([0,.14,.3,.5,.8,1].map(chapterAt),[0,1,2,3,4,4]))

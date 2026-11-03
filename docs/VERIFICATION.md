@@ -13,3 +13,5 @@ Visual critique: the gallery carries the subject and the company-name formation 
 The taste skill's bundled inspector was unavailable, so no score or inspector pass is claimed. Direct Chromium screenshots and interaction checks are used. This is a working implementation, not an Awwwards recognition claim.
 
 Revision: replaced both scenes with the latest user-supplied Originkit components, removed the tile-letter reveal, integrated extracted company materials, and replaced code-editor image variants with mobile interfaces.
+
+Latest revision: the two reference components have been removed. Four current tests validate persistent image-to-word assignment, trajectory continuity, finite geometry and narrative sequencing. Desktop/mobile checks also cover all nine company/project routes. See MOTION_REVISION.md for the current architecture.

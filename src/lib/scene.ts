@@ -15,9 +15,3 @@ export function chapterAt(p: number) {
   if (p < 0.76) return 3
   return 4
 }
-export function tunnelDepth(progress: number) { return 0 - 70 * clamp(progress) }
-export function scenePhases(p: number) {
- const gather = smooth(.5,.63,p)
- const resolve = smooth(.76,.89,p)
- return {gather,resolve,tunnelOpacity:1-gather,spiralOpacity:gather*(1-resolve),nameOpacity:smooth(.8,.9,p)}
-}

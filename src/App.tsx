@@ -8,6 +8,7 @@ import Loader from './components/Loader'
 import StudioContent from './components/StudioContent'
 import ProjectDialog from './components/ProjectDialog'
 import ArrowIcon from './components/ArrowIcon'
+import {SiteLinks} from './CompanyPages'
 import CompanyStory from './components/CompanyStory'
 import { chapterAt } from './lib/scene'
 
@@ -95,12 +96,12 @@ export default function App() {
     <div inert={!loaded}>
       <header className="site-header">
         <Brand />
-        <nav className="desktop-nav" aria-label="Main navigation"><a href="#expertise">Expertise</a><a href="#approach">Our approach</a></nav>
+        <nav className="desktop-nav" aria-label="Main navigation"><a href="/about">About</a><a href="/services">Services</a><a href="/projects">Projects</a><a href="/contact">Contact</a></nav>
         <button className="project-button" onClick={() => openEnquiry()}>Start a project <ArrowIcon /></button>
         <button className={`menu-toggle ${menu ? 'is-open' : ''}`} aria-label={menu ? 'Close menu' : 'Open menu'} aria-expanded={menu} aria-controls="mobile-navigation" onClick={() => setMenu(!menu)}><span /><span /></button>
       </header>
       <AnimatePresence>{menu && <motion.nav id="mobile-navigation" className="mobile-navigation" aria-label="Mobile navigation" initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} transition={{ duration: .3 }}>
-        {['Expertise', 'Our approach', 'Let’s talk'].map((label, i) => <motion.a key={label} href={['#expertise', '#approach', '#contact'][i]} onClick={e => { setMenu(false); if (lenisRef.current) { e.preventDefault(); lenisRef.current.start(); lenisRef.current.scrollTo(['#expertise', '#approach', '#contact'][i], { force: true, offset: -24 }) } }} initial={{ y: 24, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: i * .06, ease: easing }}>{label}<ArrowIcon /></motion.a>)}
+        {['About', 'Services', 'Projects', 'Contact'].map((label, i) => <motion.a key={label} href={['/about', '/services', '/projects', '/contact'][i]} onClick={() => setMenu(false)} initial={{ y: 24, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: i * .06, ease: easing }}>{label}<ArrowIcon /></motion.a>)}
         <p>Thoughtful design.<br />Exceptional engineering.</p>
       </motion.nav>}</AnimatePresence>
       <main inert={menu}>
@@ -117,7 +118,7 @@ export default function App() {
                 </motion.div>}
               </AnimatePresence>
             </div>
-            <AnimatePresence>{chapter === 3 && !reduced && <motion.div className="spiral-copy" initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} transition={{ duration: .6 }}><p>Every possibility.<br />Coming together.</p></motion.div>}</AnimatePresence>
+            <AnimatePresence>{chapter === 3 && !reduced && <motion.div className="spiral-copy" initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} transition={{ duration: .6 }}><p>A thousand possibilities.<br />One continuous thread.</p></motion.div>}</AnimatePresence>
             <AnimatePresence>{chapter === 4 && !reduced && <motion.div className="brand-resolve" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} transition={{ duration: .7 }}><p>Many possibilities. One partner.</p><a className="text-action" href="#company">Meet CEFABEX <ArrowIcon down /></a></motion.div>}</AnimatePresence>
             <div className="cinema-bottom">
               <a className="scroll-prompt" href="#expertise" onClick={e => { if (!reduced && chapter < 3) { e.preventDefault(); const section = sceneRef.current; if (section) lenisRef.current?.scrollTo(section.offsetTop + (section.offsetHeight - innerHeight) * [0.15, .30, .52][chapter], { duration: 1.6 }) } }}><span className="scroll-circle" aria-hidden="true">↓</span><span>{chapter < 3 ? 'Scroll into possibility' : 'Keep going. It gets good.'}</span></a>
@@ -128,7 +129,7 @@ export default function App() {
           </div>
         </section>
         <CompanyStory />
-        <StudioContent onEnquire={openEnquiry} />
+        <StudioContent onEnquire={openEnquiry} /><SiteLinks/>
       </main>
     </div>
     <ProjectDialog open={enquiry} onClose={() => setEnquiry(false)} initialService={service} />

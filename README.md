@@ -26,11 +26,11 @@ npm run preview
 
 - The user-supplied particle gimbal sits above a loader that counts from 1 to 200%.
 - Three scroll chapters change the central phrase while software imagery travels inward.
-- Continued scrolling transitions the supplied image tunnel into the supplied arc-spaced spiral, then reveals a masked typographic CEFABEX wordmark.
+- The same images gather from the tunnel into a flowing serpentine trail, move inward, and assemble into the CEFABEX wordmark.
 - Interactive expertise tabs, the studio’s approach, FAQs and a project brief complete the page.
 - Visitors can skip the introduction. Reduced motion replaces the extended camera journey with a static composition; unavailable WebGL falls back to local images.
 
-The supplied Three.js tunnel retains its floor, ceiling and wall planes. The supplied Canvas2D spiral retains its arc-length parametrisation, tangent rotation and size attenuation. GSAP coordinates the scene, Lenis is the sole smooth-scroll engine, and Motion handles interface transitions. No external image or font requests are required.
+One Three.js scene retains every image identity through the tunnel, gathering trail and word formation. GSAP coordinates the scene, Lenis is the sole smooth-scroll engine, and Motion handles interface transitions. No external image or font requests are required.
 
 ## Images
 
@@ -53,3 +53,11 @@ Before launch, connect the dialog to the intended enquiry endpoint or confirmed 
 ## Browser verification
 
 After building and starting the preview server on port 4173, run `npm run test:browser`. The script checks desktop, tablet, mobile, all five scene stages, expertise tabs, form validation, brief download, FAQs, mobile navigation and reduced motion. It saves screenshots to the ignored `artifacts/` directory. Override `TARGET_URL` and `CHROMIUM_PATH` for other environments.
+
+## Connected pages and unified motion
+
+The site now includes /about, /services, /projects, /contact and five /projects/:slug detail pages. All content is grounded in the supplied company brochure; the project pages distinguish specific milestones from broader project areas. Native links connect the pages. Static hosting must send unknown application routes to index.html (a Netlify _redirects file is included).
+
+The intro uses one Three.js InstancedMesh. Persistent image IDs gather from the tunnel walls into an open serpentine trail and then move to font-sampled word targets. A final glyph mask trims the same mesh into smooth typography. There are no crossfaded tunnel/spiral layers or separate name overlay.
+
+Run node scripts/verify-pages.mjs against the production preview to check every page at desktop and phone widths.

@@ -65,7 +65,7 @@ for(const width of [768,390]){
   await page.getByRole('button',{name:'Open menu'}).click()
   await page.waitForTimeout(400)
   await page.screenshot({path:`${artifacts}/mobile-menu.png`})
-  await page.getByRole('navigation',{name:'Mobile navigation'}).getByRole('link',{name:'Our approach'}).click()
+  await page.getByRole('navigation',{name:'Mobile navigation'}).getByRole('link',{name:'Projects'}).click()
   await page.waitForTimeout(1800)
   console.log('Mobile menu navigation y:',await page.evaluate(()=>scrollY))
  }
