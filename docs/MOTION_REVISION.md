@@ -22,3 +22,20 @@ Company photographs and project previews remain native images. The global photo-
 Navigation uses the supplied Poster Page Curl's cylindrical WebGL shader, adapted to the actual outgoing page. A page turn takes 3.2 seconds. Fold travel is calibrated to the viewport diagonal so it remains visible during the turn. Incoming titles enter after the peel has begun revealing the new route. Reduced motion and unavailable WebGL use immediate navigation.
 
 Company copy, project areas, logo and photographs remain sourced from the supplied brochure.
+
+## Motion after the opening
+
+The landing page now has a sequence of distinct scroll scenes, rather than one animated opening followed by reveal-only sections:
+
+| Section | Scroll behavior | Fallback |
+| --- | --- | --- |
+| Company story | Offset rectangular photo masks and heading reveals | Full native photographs |
+| Expertise | Sticky web → app → software chapters; copy shifts and image wipes | Ordinary accessible service tabs on short viewports or reduced motion |
+| Manifesto | Sticky large type with words resolving in reading order | Fully visible text in normal flow |
+| Project collection | Vertical input traverses all five project areas horizontally | Stacked project links and photo masks on tablet/phone |
+| Process | Large counter, active step and progress line advance together | Vertical steps on smaller screens |
+| FAQ, contact and footer | Scrubbed row, heading and lettering reveals | Fully visible semantic content |
+
+GSAP owns each scene. Lenis remains the only smooth-scroll engine; tab and keyboard navigation use the same instance, with immediate jumps for keyboard selection. All scrubbed timelines use direct progress without a trailing playback clock. Each match-media context reverts its transforms, triggers and pin spacers on route changes or motion-preference changes.
+
+The expertise content remains focusable and labeled as tabs and tabpanels. Project links can be reached by keyboard; focusing an offscreen project moves its rail into view. All existing enquiry, routing and page-curl behavior remains available. Native images stay planar and unscaled.

@@ -7,6 +7,7 @@ The current scroll revision is checked with:
 - `npm run test:browser`: Chromium wheel input advances the gallery; reverse wheel input reverses it; stopping leaves both the progress value and rendered canvas unchanged. The test reaches tunnel, gathering, trail, writing, image-word hold and solid-text stages by scrolling.
 - The same browser check verifies no video or playback buttons, undeformed native company photos, a page curl still visible after one second and lasting approximately 3.2 seconds, tablet/phone layouts without horizontal overflow, reduced motion and enquiry validation.
 - `node scripts/verify-pages.mjs`: checks all nine About, Services, Projects, Contact and project-detail paths at 1440 px and 390 px widths.
+- `npm run test:landing`: checks image-mask progress, all three service chapters, idle stability, keyboard tab and project access, horizontal project travel/reversal, manifesto ink, all process stages, responsive stage controls, reduced motion and scene cleanup across client-side route changes.
 
 Screenshots are stored in the ignored artifacts directory. The opening, trail, image-word, final text, flat company photograph and page-curl frames are inspected directly. Browser checks use Chromium's software WebGL renderer; physical-device GPU performance has not been measured.
 

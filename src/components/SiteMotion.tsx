@@ -8,7 +8,7 @@ gsap.registerPlugin(ScrollTrigger)
 export default function SiteMotion({path}:{path:string}){
  const reduced=Boolean(useReducedMotion())
  useEffect(()=>{
-  if(reduced)return
+  if(reduced||path==='/')return
   const root=document.getElementById('site-content')!
   const entryDelay=document.documentElement.classList.contains('is-page-turning')?PAGE_TURN.contentDelay:0
   const context=gsap.context(()=>{

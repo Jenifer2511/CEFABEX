@@ -11,6 +11,7 @@ import ArrowIcon from './components/ArrowIcon'
 import {SiteLinks} from './CompanyPages'
 import CompanyStory from './components/CompanyStory'
 import {JOURNEY,journeyChapter,journeyPhase} from './lib/journey'
+import HomeScrollMotion from './components/HomeScrollMotion'
 
 gsap.registerPlugin(ScrollTrigger)
 const phrases = [
@@ -43,6 +44,10 @@ export default function App() {
   const complete = useCallback(() => {sessionStorage.setItem('cefabex-ready','1');setLoaded(true)}, [])
   const onReady = useCallback(() => setReady(true), [])
   const openEnquiry = useCallback((type?: string) => { setService(type); setEnquiry(true); setMenu(false) }, [])
+  const scrollToPosition=useCallback((position:number,immediate=false)=>{
+    if(lenisRef.current)lenisRef.current.scrollTo(position,{duration:1.1,immediate})
+    else window.scrollTo({top:position,behavior:'instant'})
+  },[])
 
   useEffect(() => {
     if (reduced) { setLoaded(true);setStarted(true); return }
@@ -108,7 +113,7 @@ export default function App() {
         {['About', 'Services', 'Projects', 'Contact'].map((label, i) => <motion.a key={label} href={['/about', '/services', '/projects', '/contact'][i]} onClick={() => setMenu(false)} initial={{ y: 24, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: i * .06, ease: easing }}>{label}<ArrowIcon /></motion.a>)}
         <p>Thoughtful design.<br />Exceptional engineering.</p>
       </motion.nav>}</AnimatePresence>
-      <main inert={menu}>
+      <main inert={menu} data-homepage="">
         <section ref={sceneRef} id="top" className={`cinema scroll-cinema ${reduced ? 'is-reduced' : ''}`} aria-label="CEFABEX introduction">
           <div ref={stageRef} className="cinema-stage" data-chapter={chapter} data-journey-position="0" data-scroll-progress="0" data-phase="tunnel">
             <GalleryTunnel progress={progress} reduced={reduced} onReady={onReady} />
@@ -133,7 +138,8 @@ export default function App() {
           </div>
         </section>
         <CompanyStory />
-        <StudioContent onEnquire={openEnquiry} /><SiteLinks/>
+        <StudioContent ready={loaded&&started} onEnquire={openEnquiry} onScrollTo={scrollToPosition} /><SiteLinks/>
+        <HomeScrollMotion ready={loaded&&started}/>
       </main>
     </div>
     <ProjectDialog open={enquiry} onClose={() => setEnquiry(false)} initialService={service} />

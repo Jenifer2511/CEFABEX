@@ -33,6 +33,19 @@ Internal navigation captures the outgoing viewport locally with html-to-image an
 
 Company photos and project previews are native, undeformed images. GSAP provides restrained masked word reveals and supporting copy entrances; Motion handles menus, phrases and the enquiry dialog. Supporting images do not bulge, warp or scale on hover. WebGL failure retains static content and functional navigation.
 
+## Landing-page scroll scenes
+
+The story continues beyond the opening:
+
+- Company photographs open through rectangular masks as their sections enter.
+- A sticky expertise stage progresses through web, app and software chapters. Images wipe into place while the copy changes. Tabs remain usable with a pointer or arrow keys.
+- The large manifesto stays in view while its words resolve in reading order.
+- Desktop scrolling moves horizontally through all five brochure project areas. Phones and tablets get a stacked collection with image-mask reveals.
+- A pinned desktop process stage advances its large counter, active step and progress line. Smaller screens use a vertical process sequence.
+- Headings, FAQ rows, the contact section and footer lettering respond directly to scroll position.
+
+All these scenes use GSAP ScrollTrigger and the existing Lenis instance. Scrubbed effects hold and reverse with scroll; none are timed playback. Reduced motion shows static, readable content and ordinary service tabs. Short viewports use natural-flow layouts instead of the service hold. No additional image deformation or animation dependency is introduced.
+
 ## Verify
 
 ```sh
@@ -41,10 +54,13 @@ npm run typecheck
 npm run build
 # With the production preview running on port 4173:
 npm run test:browser
+npm run test:landing
 node scripts/verify-pages.mjs
 ```
 
 The six unit tests cover relative scroll stages, staggered gathering, shared-route following, forward/reverse geometry and glyph ordering. The browser script checks actual wheel control, idle stability, reverse scrolling, all six scene stages, flat photographs, the visible slow curl, responsive layouts, reduced motion and enquiry validation. The route script checks all nine company/project paths at desktop and phone widths. Screenshots are saved to the ignored artifacts directory. Set TARGET_URL or CHROMIUM_PATH for the main browser script when needed.
+
+The landing browser script checks chapter progression, masked photos, idle stability, horizontal travel and reversal, keyboard project access, the manifesto, process stages, responsive controls, reduced motion and cleanup across client-side navigation.
 
 ## Images and company material
 
