@@ -1,0 +1,14 @@
+# CEFABEX image provenance
+
+All 112 gallery images are original interface studies authored for this website. They depict software interfaces: project boards, product analytics, calendars, code editors, team messaging, commerce tools, editorial websites, music players, notes, finance apps, mobile products, file management and deployment tools.
+
+These are concept explorations, not client projects, testimonials or evidence of delivered work. Any sample names, figures and product names exist only inside the interface studies. No third-party screenshots, stock images, customer marks or default Originkit imagery are included.
+
+- `public/images/image-001.webp` through `image-112.webp`: 112 distinct studies, 640 × 400 pixels.
+- `public/images/atlas.webp`: all 112 images in a 14-column × 8-row grid, 3584 × 1280 pixels. Each cell is 256 × 160 pixels; row-major order, starting at image 001 in the top-left corner.
+- `web-preview.webp`, `mobile-preview.webp`, `software-preview.webp`: selected full-resolution studies, 1280 × 800 pixels.
+- `public/social-cover.webp`: original typographic social sharing cover, 1200 × 750 pixels.
+
+The studies use locally installed Geist, licensed under the SIL Open Font License by its package. All images are local and make no external media requests.
+
+To regenerate, run `node scripts/generate-assets.mjs`. The script uses the environment's Playwright installation and Chromium at `/usr/bin/chromium`, plus Pillow for resizing and atlas assembly. These paths can be changed for another machine. The generator embeds the project's installed Geist font and performs no network requests.

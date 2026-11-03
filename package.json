@@ -1,0 +1,33 @@
+{
+  "name": "cefabex",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 0.0.0.0",
+    "build": "tsc -b && vite build",
+    "preview": "vite preview --host 0.0.0.0",
+    "typecheck": "tsc -b --pretty false",
+    "test": "node tests/scene.test.mjs",
+    "test:browser": "node scripts/verify-browser.mjs"
+  },
+  "dependencies": {
+    "@fontsource-variable/geist": "^5.2.8",
+    "gsap": "^3.14.2",
+    "lenis": "^1.3.17",
+    "motion": "^12.23.26",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "three": "^0.182.0"
+  },
+  "devDependencies": {
+    "@types/node": "^24.10.0",
+    "@types/react": "^19.2.0",
+    "@types/react-dom": "^19.2.0",
+    "@types/three": "^0.182.0",
+    "@vitejs/plugin-react": "^5.1.1",
+    "playwright": "^1.64.1",
+    "typescript": "~5.9.3",
+    "vite": "^7.2.2"
+  }
+}

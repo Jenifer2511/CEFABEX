@@ -1,0 +1,7 @@
+{
+  "note": "Proposed configuration only. Saving to the cloud draft was rejected because the draft is not editable. These commands were tested in the current instance.",
+  "config": {
+    "install_script": "#!/usr/bin/env bash\nset -euo pipefail\ncd /workspace/CEFABEX\nnode -e \"if (Number(process.versions.node.split('.')[0]) < 24) throw new Error('CEFABEX requires Node.js 24 or later')\"\nnpm ci --no-audit --no-fund\nnpm run build\nnpm test\n",
+    "start_skill": "# CEFABEX development\nUse the existing checkout at /workspace/CEFABEX; cloud tasks are isolated, so do not create a Git worktree unless explicitly requested.\nUse Node.js 24+. From /workspace/CEFABEX run npm ci if dependencies are missing. Start npm run dev -- --port 5173 in a long-running terminal. Check a local HTTP request returns the CEFABEX title. No user-facing loopback preview links.\nProduction checks: npm run build and npm test. Start npm run preview -- --port 4173, then run npm run test:browser. CHROMIUM_PATH can override /usr/bin/chromium. Media is local and no external credentials are required.\nThe enquiry form produces a copy/download brief, not a sent email. Add a real verified delivery endpoint before claiming submissions are delivered."
+  }
+}
