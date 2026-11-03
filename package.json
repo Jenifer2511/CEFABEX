@@ -10,7 +10,8 @@
     "typecheck": "tsc -b --pretty false",
     "test": "node tests/scene.test.mjs",
     "test:browser": "node scripts/verify-browser.mjs",
-    "test:landing": "node scripts/verify-landing-scroll.mjs"
+    "test:landing": "node scripts/verify-landing-scroll.mjs",
+    "test:story": "node scripts/verify-storytelling.mjs"
   },
   "dependencies": {
     "@fontsource-variable/geist": "^5.2.8",

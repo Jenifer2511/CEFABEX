@@ -1,0 +1,50 @@
+.cd-capabilities,.cd-proof{--cd-ink:var(--ink,#111d31);--cd-blue:var(--accent,#3159e8);--cd-cream:var(--ground,#f8f7f3);padding-block:128px;position:relative}
+.cd-capabilities{background:var(--cd-cream);color:var(--cd-ink)}
+.cd-section-opening{display:grid;grid-template-columns:1.3fr .7fr;align-items:end;gap:80px;margin-bottom:96px}
+.cd-section-opening h2{font-size:clamp(48px,5.8vw,88px);line-height:1.03;letter-spacing:-.04em;max-width:840px}
+.cd-section-opening>p{font-size:20px;line-height:1.5;max-width:400px}
+.cd-capability-layout{display:grid;grid-template-columns:.8fr 1.2fr;gap:112px;align-items:start}
+.cd-capability-aside{position:sticky;top:112px;max-width:480px}
+.cd-capability-photo{margin:0 0 32px}
+.cd-capability-photo img{display:block;width:100%;height:auto;aspect-ratio:8/7;object-fit:cover;transform:none}
+.cd-capability-photo figcaption{font-size:12px;line-height:1.5;margin-top:12px;color:var(--muted,#606974)}
+.cd-capability-aside h3{font-size:30px;line-height:1.15;letter-spacing:-.04em;margin-bottom:16px}
+.cd-capability-aside>p{font-size:18px;line-height:1.6;max-width:400px}
+.cd-text-action{display:inline-flex;align-items:center;gap:24px;min-height:44px;font-size:14px;font-weight:500;margin-top:24px;padding:0;color:inherit;text-align:left}
+.cd-text-action svg{width:20px;height:20px;flex-shrink:0;transition:transform .5s var(--ease,cubic-bezier(.22,1,.36,1))}
+.cd-capability-list{display:grid;gap:64px}
+.cd-capability-row{display:grid;grid-template-columns:32px 1fr;gap:24px;position:relative}
+.cd-capability-number{font-size:12px;color:var(--cd-blue);font-variant-numeric:tabular-nums;padding-top:8px}
+.cd-capability-body h3{font-size:36px;line-height:1.1;letter-spacing:-.04em;margin-bottom:24px}
+.cd-capability-body>p{font-size:18px;line-height:1.6;max-width:640px}
+.cd-capability-body ul{display:flex;flex-wrap:wrap;gap:8px 24px;list-style:none;padding:0;margin:24px 0 0;color:var(--muted,#606974);font-size:14px;line-height:1.6}
+.cd-capability-body li{display:inline}
+.cd-capability-body .cd-text-action{color:var(--cd-blue)}
+.cd-proof{background:#111d31;color:#f6f5f0}
+.cd-proof .cd-section-opening>p{color:#c9d1de}
+.cd-people-layout{display:grid;grid-template-columns:1.3fr .7fr;align-items:center;gap:80px}
+.cd-team-photo{margin:0}
+.cd-team-photo img{display:block;width:100%;height:auto;aspect-ratio:512/324;object-fit:cover;transform:none}
+.cd-team-photo figcaption,.cd-milestone-photo figcaption{font-size:12px;line-height:1.5;color:#b8c4d8;margin-top:16px}
+.cd-people-copy h3{font-size:36px;line-height:1.1;letter-spacing:-.04em;max-width:380px;margin-bottom:24px}
+.cd-people-copy>p{font-size:18px;line-height:1.6;margin-top:16px;color:#d4dce8;max-width:440px}
+.cd-milestone-layout{display:grid;grid-template-columns:.7fr 1.3fr;gap:112px;align-items:center;margin-top:128px}
+.cd-milestone-photo{width:100%;max-width:400px;margin:0 auto}
+.cd-milestone-photo img{display:block;width:100%;height:auto;aspect-ratio:462/640;object-fit:contain;transform:none}
+.cd-milestone-copy>h3{font-size:60px;line-height:1.02;letter-spacing:-.04em;max-width:680px;margin-bottom:48px}
+.cd-milestone-item{max-width:620px;margin-top:40px}
+.cd-milestone-item h4{font-size:24px;line-height:1.2;letter-spacing:-.02em;margin-bottom:16px}
+.cd-milestone-item>p{color:#d4dce8;font-size:18px;line-height:1.6}
+.cd-milestone-item .cd-text-action{margin-top:16px}
+.cd-proof-action{margin-top:40px;color:#b5c9ff}
+.cd-company-record{display:grid;grid-template-columns:1fr 1fr 1fr;gap:40px;align-items:end;margin-top:128px}
+.cd-company-record>p{font-size:24px;line-height:1.3;letter-spacing:-.02em}
+.cd-company-record>p>span{color:#b8c4d8}
+.cd-company-record>div>span{font-size:16px}
+.cd-company-record>div>p{font-size:12px;color:#b8c4d8;margin-top:12px;overflow-wrap:anywhere}
+.cd-proof :focus-visible{outline-color:#f6f5f0}
+@media(hover:hover) and (pointer:fine){.cd-text-action:hover svg{transform:translate(3px,-3px)}}
+@media(max-width:1100px){.cd-section-opening{gap:48px}.cd-capability-layout{gap:64px}.cd-people-layout{gap:48px}.cd-milestone-layout{gap:64px}.cd-section-opening h2{font-size:60px}.cd-capability-body h3{font-size:30px}.cd-milestone-copy>h3{font-size:48px}}
+@media(max-width:899px){.cd-capabilities,.cd-proof{padding-block:96px}.cd-section-opening{grid-template-columns:1fr;gap:32px;margin-bottom:64px}.cd-section-opening>p{max-width:600px;font-size:18px}.cd-capability-layout{grid-template-columns:.8fr 1.2fr;gap:40px}.cd-capability-body>p{font-size:16px}.cd-capability-row{grid-template-columns:1fr;gap:12px}.cd-capability-list{gap:48px}.cd-capability-aside>p{font-size:16px}.cd-people-layout{grid-template-columns:1fr;gap:40px}.cd-people-copy{max-width:680px}.cd-people-copy>p{max-width:640px}.cd-milestone-layout{gap:40px;margin-top:96px}.cd-milestone-copy>h3{font-size:36px}.cd-milestone-item>p{font-size:16px}.cd-company-record{margin-top:96px;grid-template-columns:1fr 1fr}.cd-company-record>p{grid-column:1/-1}}
+@media(max-width:599px){.cd-capabilities,.cd-proof{padding-block:80px}.cd-section-opening h2{font-size:48px}.cd-section-opening{gap:24px;margin-bottom:48px}.cd-capability-layout{grid-template-columns:1fr;gap:64px}.cd-capability-aside{position:relative;top:auto;max-width:none}.cd-capability-photo{margin-bottom:24px}.cd-capability-photo img{aspect-ratio:1.25;object-fit:cover}.cd-capability-aside h3{font-size:30px}.cd-capability-aside>p{font-size:16px}.cd-capability-row{grid-template-columns:20px 1fr;gap:16px}.cd-capability-body h3{font-size:30px;margin-bottom:16px}.cd-capability-body>p{font-size:16px;line-height:1.6}.cd-capability-body ul{gap:8px 16px;font-size:12px;margin-top:16px}.cd-capability-body .cd-text-action{margin-top:16px}.cd-people-copy h3{font-size:36px}.cd-people-copy>p{font-size:16px}.cd-milestone-layout{grid-template-columns:1fr;gap:40px;margin-top:80px}.cd-milestone-photo{max-width:320px}.cd-milestone-copy>h3{font-size:48px;margin-bottom:32px}.cd-milestone-item{margin-top:32px}.cd-company-record{grid-template-columns:1fr;gap:32px;margin-top:80px}.cd-company-record>p{grid-column:auto}.cd-team-photo figcaption,.cd-milestone-photo figcaption{font-size:12px}.cd-proof-action{margin-top:32px}}
+@media(prefers-reduced-motion:reduce){.cd-text-action svg{transition:none}.cd-capability-aside{position:relative;top:auto}}

@@ -11,7 +11,7 @@ const pose=()=>page.locator('.cinema-stage').getAttribute('data-journey-position
 await page.goto(target)
 await page.locator('.loader').waitFor({state:'detached',timeout:15000})
 await page.waitForFunction(()=>Number(document.querySelector('.gallery-canvas').dataset.imageCount)>=112)
-assert.equal(await page.locator('video').count(),0)
+assert.equal(await page.locator('video[autoplay]').count(),0)
 assert.equal(await page.getByRole('button',{name:/Pause journey|Play journey|Replay journey/}).count(),0)
 const idle=await pose();await page.waitForTimeout(1000);assert.equal(await pose(),idle,'Scene must not autoplay')
 await page.mouse.wheel(0,600);await page.waitForFunction(()=>Number(document.querySelector('.cinema-stage').dataset.scrollProgress)>.01);await settle()

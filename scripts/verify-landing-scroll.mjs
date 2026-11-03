@@ -9,7 +9,6 @@ const browser=await chromium.launch({executablePath:process.env.CHROMIUM_PATH||'
 const errors=[]
 const page=await browser.newPage({viewport:{width:1440,height:1000}})
 page.on('pageerror',e=>errors.push(e.message))
-await page.addInitScript(()=>sessionStorage.setItem('cefabex-ready','1'))
 const settle=async()=>page.evaluate(()=>new Promise(resolve=>{let previous=scrollY,stable=0;const tick=()=>{stable=Math.abs(scrollY-previous)<.1?stable+1:0;previous=scrollY;if(stable>=20)resolve(true);else requestAnimationFrame(tick)};requestAnimationFrame(tick)}))
 const go=async(position)=>{await page.evaluate(y=>scrollTo(0,y),position);await settle()}
 const scene=async(selector,progress)=>{
@@ -17,7 +16,7 @@ const scene=async(selector,progress)=>{
  assert.ok(Number.isFinite(range.start)&&range.end>range.start,`${selector} needs a valid scroll range`)
  await go(range.start+(range.end-range.start)*progress)
 }
-await page.goto(target)
+await page.goto(target);await page.locator('.loader').waitFor({state:'detached',timeout:15000})
 await page.waitForFunction(()=>document.querySelector('main[data-homepage]')?.dataset.homeMotion==='ready')
 await page.waitForFunction(()=>Number(document.querySelector('.work-journey').dataset.scrollEnd)>0)
 await settle()
@@ -86,7 +85,7 @@ assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerW
 console.log('Desktop: image masks, three service chapters, horizontal projects, manifesto, process and footer passed')
 
 for(const [width,height] of [[768,900],[390,844]]){
- await page.setViewportSize({width,height});await page.goto(target)
+ await page.setViewportSize({width,height});await page.goto(target);await page.locator('.loader').waitFor({state:'detached',timeout:15000})
  await page.waitForFunction(()=>document.querySelector('.expertise-journey')?.classList.contains('has-scroll-chapters'))
  await scene('.expertise-journey',.88)
  assert.equal(await page.locator('.expertise-journey').getAttribute('data-active-stage'),'2')
@@ -119,7 +118,7 @@ assert.equal(await reduced.locator('.expertise-journey').getAttribute('data-acti
 assert.equal(await reduced.locator('.work-slide').count(),5)
 assert.equal(await reduced.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false)
 console.log('Tablet/phone: readable chapters, stacked projects and no overflow; reduced motion and keyboard controls passed')
-await page.setViewportSize({width:1440,height:1000});await page.goto(target)
+await page.setViewportSize({width:1440,height:1000});await page.goto(target);await page.locator('.loader').waitFor({state:'detached',timeout:15000})
 await page.waitForFunction(()=>document.querySelectorAll('.pin-spacer').length===2)
 await page.locator('.desktop-nav a[href="/about"]').click()
 await page.getByRole('heading',{name:'From mind to market.',level:1}).waitFor()

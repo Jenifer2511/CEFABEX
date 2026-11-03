@@ -11,7 +11,7 @@ const summaries=[
  'A development environment for students and engineers to turn research into functional prototypes.',
 ]
 export default function SelectedWork({onScrollTo}:{onScrollTo:ScrollToPosition}){
- return <section className="work-journey" id="selected-work" aria-labelledby="work-title">
+ return <section className="work-journey" id="selected-work" data-thread-stop="projects" aria-labelledby="work-title">
   <div className="work-stage">
    <div className="work-intro section-shell"><ScrollHeading text="Engineering in practice." id="work-title"/><p data-scroll-copy="">Projects, prototypes and milestones from the CEFABEX journey.</p></div>
    <div className="work-viewport section-shell"><div className="work-track">

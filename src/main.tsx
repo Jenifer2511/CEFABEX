@@ -4,6 +4,7 @@ import '@fontsource-variable/geist'
 import 'lenis/dist/lenis.css'
 import './styles.css'
 import './home-scroll.css'
+import './storytelling.css'
 import SiteRouter from './SiteRouter'
 
 ReactDOM.createRoot(document.getElementById('root')!).render(

@@ -9,9 +9,9 @@ import ArrowIcon from './ArrowIcon'
 gsap.registerPlugin(ScrollTrigger)
 export type ScrollToPosition=(position:number,immediate?:boolean)=>void
 const services=[
- {name:'Web experiences',short:'Web',title:'Make your first impression count.',description:'Considered design. Fast, accessible development. Websites that express who you are and make the next step feel natural.',detail:'Company websites · Ecommerce · Web applications',image:'/images/web-preview.webp',alt:'Original CEFABEX exploration of a composed web interface'},
- {name:'Mobile applications',short:'Apps',title:'A place in someone’s everyday.',description:'From the first tap to the smallest interaction, we design and develop apps that feel useful, familiar and easy to return to.',detail:'iOS & Android · Cross platform · Product design',image:'/images/mobile-preview.webp',alt:'Original CEFABEX exploration of a mobile application'},
- {name:'Custom software',short:'Software',title:'Built for the way you work.',description:'Tools that connect the moving parts of your business. We turn complicated processes into clear, dependable digital products.',detail:'Business platforms · Integrations · Internal tools',image:'/images/software-preview.webp',alt:'Original CEFABEX exploration of a custom software workspace'},
+ {name:'Web experiences',short:'Web',title:'Make your first impression count.',description:'Considered design. Fast, accessible development. Websites that express who you are and make the next step feel natural.',detail:'Company websites · Ecommerce · Web applications',image:'/editorial/web-experience.webp',alt:'Original CEFABEX exploration of a composed web interface'},
+ {name:'Mobile applications',short:'Apps',title:'A place in someone’s everyday.',description:'From the first tap to the smallest interaction, we design and develop apps that feel useful, familiar and easy to return to.',detail:'iOS & Android · Cross platform · Product design',image:'/editorial/mobile-experience.webp',alt:'Original CEFABEX exploration of a mobile application'},
+ {name:'Custom software',short:'Software',title:'Built for the way you work.',description:'Tools that connect the moving parts of your business. We turn complicated processes into clear, dependable digital products.',detail:'Business platforms · Integrations · Internal tools',image:'/editorial/data-platform.webp',alt:'Original CEFABEX exploration of a custom software workspace'},
 ]
 
 export default function ExpertiseJourney({ready,onEnquire,onScrollTo}:{ready:boolean;onEnquire:(service?:string)=>void;onScrollTo:ScrollToPosition}){
@@ -67,7 +67,7 @@ export default function ExpertiseJourney({ready,onEnquire,onScrollTo}:{ready:boo
   else return
   event.preventDefault();select(next,true);tabs.current[next]?.focus({preventScroll:true})
  }
- return <section ref={root} className="expertise-journey" id="expertise" aria-labelledby="expertise-title" data-active-stage={active}>
+ return <section ref={root} className="expertise-journey" id="expertise" data-thread-stop="expertise" aria-labelledby="expertise-title" data-active-stage={active}>
   <div className="expertise-stage section-shell">
    <div className="expertise-intro"><ScrollHeading id="expertise-title" text="Built around you."/><p data-scroll-copy="">Your ambition, translated into software that feels right. From the first impression to the everyday details.</p></div>
    <div className="expertise-layout">

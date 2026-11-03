@@ -3,6 +3,9 @@ import ExpertiseJourney from './ExpertiseJourney'
 import type {ScrollToPosition} from './ExpertiseJourney'
 import SelectedWork from './SelectedWork'
 import ArrowIcon from './ArrowIcon'
+import ScrollFilm from './ScrollFilm'
+import AmbientSignal from './AmbientSignal'
+import {CapabilityIndex,CompanyProof} from './CompanyDepth'
 
 const questions=[
  ['What can we build together?','We design and develop company websites, ecommerce experiences, mobile applications and custom software. If your idea sits between those categories, we can help define the right direction.'],
@@ -22,21 +25,25 @@ const manifesto='Good software starts with people. And grows with you.'
 export default function StudioContent({onEnquire,onScrollTo,ready}:{onEnquire:(service?:string)=>void;onScrollTo:ScrollToPosition;ready:boolean}){
  return <>
   <ExpertiseJourney ready={ready} onEnquire={onEnquire} onScrollTo={onScrollTo}/>
+  <ScrollFilm ready={ready}/>
+  <CapabilityIndex onEnquire={onEnquire}/>
   <section className="manifesto-journey section-shell" aria-label="Our philosophy">
    <div className="manifesto-content"><p className="studio-manifesto" aria-label={manifesto}>{manifesto.split(' ').map((word,i)=><span className="manifesto-word" aria-hidden="true" key={i}>{word}{' '}</span>)}</p><p className="manifesto-note" data-scroll-copy="">Thoughtful design meets practical engineering.</p></div>
   </section>
   <SelectedWork onScrollTo={onScrollTo}/>
-  <section className="process-journey" id="approach" aria-labelledby="approach-title" data-active-step="0">
+  <AmbientSignal/>
+  <CompanyProof onEnquire={onEnquire}/>
+  <section className="process-journey" id="approach" data-thread-stop="process" aria-labelledby="approach-title" data-active-step="0">
    <div className="process-stage section-shell">
     <div className="process-intro"><ScrollHeading text="From idea to everyday." id="approach-title"/><div className="process-counter" aria-hidden="true">{['01','02','03'].map((n,i)=><span className={`process-digit ${i===0?'is-current':''}`} key={n}>{n}</span>)}</div><p data-scroll-copy="">A shared direction. Every step of the way.</p></div>
     <div className="process-steps-wrap"><span className="process-line" aria-hidden="true"><span/></span><ol className="process-steps">{steps.map((step,i)=><li key={step.title}><span className="process-step-number" aria-hidden="true">0{i+1}</span><div className="process-step-copy"><h3>{step.title}</h3><p>{step.text}</p></div></li>)}</ol></div>
    </div>
   </section>
-  <section className="studio-faq section-shell" aria-labelledby="faq-title">
+  <section className="studio-faq section-shell" id="questions" data-thread-stop="questions" aria-labelledby="faq-title">
    <div><ScrollHeading text="Good questions." id="faq-title"/><p className="studio-faq-intro" data-scroll-copy="">A little clarity before we get started.</p></div>
    <div className="studio-questions">{questions.map(([question,answer])=><details key={question}><summary>{question}<span className="studio-plus" aria-hidden="true">+</span></summary><p>{answer}</p></details>)}</div>
   </section>
-  <section className="studio-contact section-shell" id="contact" aria-labelledby="contact-title">
+  <section className="studio-contact section-shell" id="contact" data-thread-stop="contact" aria-labelledby="contact-title">
    <ScrollHeading text="Have a good idea?" id="contact-title"/>
    <div className="studio-contact-bottom"><p data-scroll-copy="">Innovation begins with a conversation.</p><button className="studio-contact-button" onClick={()=>onEnquire()}>Start a project <ArrowIcon/></button></div>
   </section>

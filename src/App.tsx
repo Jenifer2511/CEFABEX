@@ -12,6 +12,8 @@ import {SiteLinks} from './CompanyPages'
 import CompanyStory from './components/CompanyStory'
 import {JOURNEY,journeyChapter,journeyPhase} from './lib/journey'
 import HomeScrollMotion from './components/HomeScrollMotion'
+import CapabilityCarousel from './components/CapabilityCarousel'
+import StoryThread from './components/StoryThread'
 
 gsap.registerPlugin(ScrollTrigger)
 const phrases = [
@@ -27,9 +29,8 @@ function Brand() {
 
 export default function App() {
   const reduced = Boolean(useReducedMotion())
-  const previouslyLoaded=useRef(sessionStorage.getItem('cefabex-ready')==='1')
-  const [loaded, setLoaded] = useState(previouslyLoaded.current)
-  const [started,setStarted]=useState(previouslyLoaded.current)
+  const [loaded, setLoaded] = useState(false)
+  const [started,setStarted]=useState(false)
   const [ready, setReady] = useState(false)
   const [chapter, setChapter] = useState(0)
   const [menu, setMenu] = useState(false)
@@ -41,7 +42,7 @@ export default function App() {
   const chapterRef=useRef(0)
   const progressBar = useRef<HTMLDivElement>(null)
   const lenisRef = useRef<Lenis | null>(null)
-  const complete = useCallback(() => {sessionStorage.setItem('cefabex-ready','1');setLoaded(true)}, [])
+  const complete = useCallback(() => setLoaded(true), [])
   const onReady = useCallback(() => setReady(true), [])
   const openEnquiry = useCallback((type?: string) => { setService(type); setEnquiry(true); setMenu(false) }, [])
   const scrollToPosition=useCallback((position:number,immediate=false)=>{
@@ -105,12 +106,12 @@ export default function App() {
     <div inert={!loaded}>
       <header className="site-header">
         <Brand />
-        <nav className="desktop-nav" aria-label="Main navigation"><a href="/about">About</a><a href="/services">Services</a><a href="/projects">Projects</a><a href="/contact">Contact</a></nav>
+        <nav className="desktop-nav" aria-label="Main navigation"><a href="#top" aria-current="page">Home</a><a href="/about">About</a><a href="/services">Services</a><a href="/projects">Projects</a><a href="/contact">Contact</a></nav>
         <button className="project-button" onClick={() => openEnquiry()}>Start a project <ArrowIcon /></button>
         <button className={`menu-toggle ${menu ? 'is-open' : ''}`} aria-label={menu ? 'Close menu' : 'Open menu'} aria-expanded={menu} aria-controls="mobile-navigation" onClick={() => setMenu(!menu)}><span /><span /></button>
       </header>
       <AnimatePresence>{menu && <motion.nav id="mobile-navigation" className="mobile-navigation" aria-label="Mobile navigation" initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} transition={{ duration: .3 }}>
-        {['About', 'Services', 'Projects', 'Contact'].map((label, i) => <motion.a key={label} href={['/about', '/services', '/projects', '/contact'][i]} onClick={() => setMenu(false)} initial={{ y: 24, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: i * .06, ease: easing }}>{label}<ArrowIcon /></motion.a>)}
+        {['Home', 'About', 'Services', 'Projects', 'Contact'].map((label, i) => <motion.a key={label} href={['#top', '/about', '/services', '/projects', '/contact'][i]} onClick={() => setMenu(false)} initial={{ y: 24, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: i * .06, ease: easing }}>{label}<ArrowIcon /></motion.a>)}
         <p>Thoughtful design.<br />Exceptional engineering.</p>
       </motion.nav>}</AnimatePresence>
       <main inert={menu} data-homepage="">
@@ -137,9 +138,11 @@ export default function App() {
             <div className="cinema-progress"><div ref={progressBar} /></div>
           </div>
         </section>
+        <CapabilityCarousel ready={loaded&&started} onScrollTo={scrollToPosition} onEnquire={openEnquiry}/>
         <CompanyStory />
         <StudioContent ready={loaded&&started} onEnquire={openEnquiry} onScrollTo={scrollToPosition} /><SiteLinks/>
         <HomeScrollMotion ready={loaded&&started}/>
+        <StoryThread ready={loaded&&started}/>
       </main>
     </div>
     <ProjectDialog open={enquiry} onClose={() => setEnquiry(false)} initialService={service} />
