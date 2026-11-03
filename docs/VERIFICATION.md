@@ -1,17 +1,11 @@
-# Validation
+# Current verification
 
-- Clean npm ci installation from package-lock.json.
-- TypeScript and Vite production build pass.
-- Four node:test cases execute: phase sequencing, inward camera travel, supplied spiral radius and equal arc spacing.
-- Chromium production-page checks at1440×1000,768×844 and390×844: no horizontal overflow, no browser console errors.
-- Inspected loader, all scroll stages, service previews, enquiry and responsive screenshots in the ignored artifacts directory.
-- Form validation, download filename/content flow, FAQ opening, mobile menu navigation and reduced-motion bypass verified.
-- No external media dependencies or invented client endorsements.
+- Production TypeScript/Vite build passes.
+- Six real node:test cases pass:15 second tunnel timing; staggered gathering;10 second trail timing; shared bridge/glyph-route following; finite geometry; complete glyph ordering.
+- Full real-time Chromium test reached tunnel, gathering, trail, writing, image-word hold and final text stages at their configured times.
+- Pause/resume, actual outgoing-page curl navigation, mobile enquiry validation/download and reduced-motion bypass passed with no console errors.
+- Every About, Services, Projects, Contact and project-detail route passed desktop 1440 px and mobile 390 px checks with no horizontal overflow or page errors.
+- Visually inspected the completed image-word, final ink text and intermediate curled-page frames. Corrected high-resolution glyph sampling after visual review.
+- The optional actual-video recorder is supplied; recording is not treated as a prerequisite or claimed unless the MP4 exists.
 
-Visual critique: the gallery carries the subject and the company-name formation is distinct. First review found crowded central text and missing arrow glyphs; the media mask, header ground and SVG controls correct these. Second review found mobile contrast and transition screenshots captured before animations had finished; the mobile mask was widened and browser checks now wait for the actual phrase and full opacity. The long introduction is deliberately optional through direct navigation, skip link and reduced motion. The concept interfaces must become real project imagery if this later becomes a work portfolio.
-
-The taste skill's bundled inspector was unavailable, so no score or inspector pass is claimed. Direct Chromium screenshots and interaction checks are used. This is a working implementation, not an Awwwards recognition claim.
-
-Revision: replaced both scenes with the latest user-supplied Originkit components, removed the tile-letter reveal, integrated extracted company materials, and replaced code-editor image variants with mobile interfaces.
-
-Latest revision: the two reference components have been removed. Four current tests validate persistent image-to-word assignment, trajectory continuity, finite geometry and narrative sequencing. Desktop/mobile checks also cover all nine company/project routes. See MOTION_REVISION.md for the current architecture.
+The taste skill's bundled inspector was unavailable; no inspector score or award recognition is claimed. Direct Chromium renders and interaction checks are the evidence.

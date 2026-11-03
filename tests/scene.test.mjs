@@ -1,20 +1,10 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
-import {organicTile} from '../src/lib/organic.ts'
-import {chapterAt} from '../src/lib/scene.ts'
-test('One image identity reaches its assigned word position',()=>{
- for(const aspect of [.46,1,1.6])for(let i=0;i<336;i++){
- const target={x:i/336-.5,y:.04};const tile=organicTile(i,336,1,aspect,target)
- assert.ok(Math.abs(tile.x-target.x*tile.width)<1e-10);assert.ok(Math.abs(tile.y-target.y*tile.width)<1e-10);assert.ok(Math.abs(tile.z+4)<1e-10);assert.equal(tile.alpha,1)
- }
-})
-test('The gathering trail and word assembly are continuous across phase boundaries',()=>{
- for(const p of [.48,.55,.62,.67,.77,.9,.985])for(const i of [0,60,140,260]){
- const a=organicTile(i,336,p-.000001,1.6,{x:.1,y:0}),b=organicTile(i,336,p+.000001,1.6,{x:.1,y:0})
- assert.ok(Math.hypot(a.x-b.x,a.y-b.y,a.z-b.z)<.01)
- }
-})
-test('Images retain finite geometry throughout forward and reverse scrubbing',()=>{
- for(let k=0;k<=100;k++)for(let i=0;i<336;i+=5){const t=organicTile(i,336,k/100,.46,{x:.1,y:0});assert.ok(Object.values(t).every(Number.isFinite));assert.ok(t.w>0&&t.h>0)}
-})
-test('Narrative keeps its three phrases before gathering and identity',()=>assert.deepEqual([0,.14,.3,.5,.8,1].map(chapterAt),[0,1,2,3,4,4]))
+import {JOURNEY,journeyPhase,journeyChapter,routeFor,followRoute,journeyTile,trailPoint,orderGlyphs} from '../src/lib/journey.ts'
+const points=Array.from({length:112},(_,i)=>({x:i/112-.5,y:Math.sin(i)*.04}));const route=routeFor(points,1.6)
+test('Director reserves 15 seconds for tunnel and exactly 10 seconds for inward trail',()=>{assert.equal(JOURNEY.tunnelEnd,15);assert.equal(JOURNEY.trailEnd-JOURNEY.gatherEnd,10);assert.equal(journeyPhase(14.99),'tunnel');assert.equal(journeyPhase(15),'gather');assert.equal(journeyPhase(20),'trail');assert.equal(journeyPhase(29.99),'trail');assert.equal(journeyPhase(30),'write')})
+test('Gathering wave starts only after 15 seconds and reaches every image by 20',()=>{const first=journeyTile(0,112,17,1.6,route),last=journeyTile(111,112,17,1.6,route);assert.equal(first.rx,0);assert.notEqual(last.ry,0);for(let i=0;i<112;i++){const t=journeyTile(i,112,20,1.6,route);assert.equal(t.rx,0);assert.equal(t.ry,0)}})
+test('Shared trail moves inward continuously during the full 10 second stage',()=>{for(const u of [.05,.3,.7,.99]){assert.ok(trailPoint(u,30,1.6).z<trailPoint(u,25,1.6).z);assert.ok(trailPoint(u,25,1.6).z<trailPoint(u,20,1.6).z)}})
+test('Every follower traverses the same bridge and letter route and deposits at its own target',()=>{const offset=route.length-points.length;for(let i=0;i<112;i++){const start=journeyTile(i,112,30,1.6,route),end=journeyTile(i,112,38.3,1.6,route);const source=followRoute(route,i),target=followRoute(route,i+offset);assert.ok(Math.hypot(start.x-source.x,start.y-source.y,start.z-source.z)<1e-9);assert.ok(Math.hypot(end.x-target.x,end.y-target.y,end.z-target.z)<1e-9)}})
+test('Route and geometry remain finite through pause/replay time samples',()=>{for(const time of [0,5,14.99,15,19.9,20,25,30,35,38,39,40.5])for(let i=0;i<112;i++){const t=journeyTile(i,112,time,1.6,route);assert.ok(Object.values(t).every(Number.isFinite));assert.ok(t.w>0&&t.h>0)}})
+test('Glyph ordering keeps every supplied image target exactly once',()=>{const ordered=orderGlyphs(points);assert.equal(ordered.length,points.length);assert.equal(new Set(ordered).size,points.length);assert.deepEqual([0,5,10,15,38].map(journeyChapter),[0,1,2,3,4])})

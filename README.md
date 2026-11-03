@@ -1,63 +1,60 @@
 # CEFABEX
 
-A responsive, scroll-led landing page for the CEFABEX software studio. Built with React, TypeScript and Vite, with locally hosted Geist typography and original software interface imagery.
+A cinematic company website built with React, TypeScript, Vite, Three.js, GSAP, Lenis and Motion. Company content, logo, photos, contact details and project areas come from the supplied brochure. Original software interface studies provide the image collection.
 
-## Develop
+## Development
 
-Use Node.js 24 or later and npm.
+Use Node.js 24 or later. Use the existing checkout; cloud tasks are isolated, so do not create a Git worktree unless explicitly requested.
 
 ```sh
 npm ci
 npm run dev
-```
-
-Vite prints the development address. The server binds to `0.0.0.0` for cloud development. Use the existing checkout; a separate Git worktree is unnecessary.
-
-```sh
-npm run typecheck
-npm test
 npm run build
-npm run preview
+npm run preview -- --port 4173
 ```
 
-`npm test` runs four deterministic checks for chapter sequencing, inward camera travel, spiral radius and equal arc spacing. `npm run build` performs TypeScript validation and writes the production site to `dist/`. `npm run preview` serves that build for local verification.
+The production build includes routes for Home, About, Services, Projects, Contact and five project-detail pages. Static hosting must route application paths to index.html; Netlify and Vercel rewrite configuration is included.
 
-## Experience
+## The timed image journey
 
-- The user-supplied particle gimbal sits above a loader that counts from 1 to 200%.
-- Three scroll chapters change the central phrase while software imagery travels inward.
-- The same images gather from the tunnel into a flowing serpentine trail, move inward, and assemble into the CEFABEX wordmark.
-- Interactive expertise tabs, the studio’s approach, FAQs and a project brief complete the page.
-- Visitors can skip the introduction. Reduced motion replaces the extended camera journey with a static composition; unavailable WebGL falls back to local images.
+The opening starts after the loader has fully exited:
 
-One Three.js scene retains every image identity through the tunnel, gathering trail and word formation. GSAP coordinates the scene, Lenis is the sole smooth-scroll engine, and Motion handles interface transitions. No external image or font requests are required.
+- 0–15 seconds: images travel inward through the tunnel. Three phrases change at0,5 and10 seconds.
+- 15–20 seconds: images gather into a trail in a staggered wave.
+- 20–30 seconds: that trail travels inward for10 seconds.
+- 30–38 seconds: each image follows the same curved bridge and glyph route, like a snake filling the letters.
+- 38–39 seconds: the images hold their CEFABEX arrangement.
+- 39–40.5 seconds: the same material resolves into solid text.
 
-## Images
+There is one persistent instanced mesh and a 112-image atlas. Images follow the same route through the glyphs; there is no crossfade to a second scene or independent slide into letter targets. Pause, replay and skip controls are visible. The clock pauses while hidden, offscreen, or interacting with menus or enquiries. Reduced motion presents a static opening.
 
-The site includes 112 distinct original software interface studies, three large previews and an image atlas. They are concept explorations, not client case studies. See [image provenance](docs/ASSETS.md).
+## Page and content motion
 
-The generated assets are included, so regeneration is optional:
+Internal navigation captures the outgoing viewport locally with html-to-image and peels it away using the supplied Poster Page Curl’s cylindrical WebGL shader. Native history and back/forward navigation are supported. The original poster artwork, external sample images and lavender styling are not used.
+
+A shared WebGL renderer gives company photos and project previews gentle depth deformation and scroll response. GSAP provides masked word reveals and staggered supporting copy. Images and navigation retain static fallbacks if WebGL is unavailable; reduced-motion preferences bypass the effects.
+
+## Verify
 
 ```sh
-node scripts/generate-assets.mjs
+npm test
+npm run typecheck
+npm run build
+# With the production preview running on port 4173:
+npm run test:browser
+node scripts/verify-pages.mjs
 ```
 
-The generator uses the installed Playwright development dependency, Chromium at `/usr/bin/chromium`, and Python 3 with Pillow to assemble the atlas. On another machine, install Chromium and Pillow and adjust the executable path in the generator if necessary. Run `npm ci` first because the generator embeds the installed Geist font.
+The six unit tests cover exact stage durations, staggered gathering,10 second inward travel, shared-route following, finite geometry and glyph ordering. The browser script runs the full 40.5 second journey, pause/resume, actual-page curl navigation, mobile enquiry and reduced motion. The route script checks all nine company/project paths at desktop and phone widths. Screenshots are saved to the ignored artifacts directory. Set TARGET_URL or CHROMIUM_PATH when needed.
 
-## Project enquiries
+Optional: `node scripts/record-journey.mjs` records the real-time journey to artifacts/journey-preview.mp4 using Chromium’s screencast and local ffmpeg. No recording is claimed unless that file was actually produced.
 
-The project dialog validates the visitor’s name, email and brief, then provides a preview, clipboard copy, text-file download and an email-composer link to cefabex.cfb@gmail.com from the supplied company PDF. The visitor must send the email from their email app; there is no server-side submission or simulated delivery. Form details remain in the current browser session.
+## Images and company material
 
-Before launch, connect the dialog to the intended enquiry endpoint or confirmed company contact destination. For an endpoint integration, keep delivery credentials server-side, validate submitted fields on the server, add abuse protection, and show success only after the endpoint confirms acceptance. Add the actual privacy notice and contact details when that delivery route is established.
+The112 software interface images, three previews and atlas are included locally. Regeneration is optional: `node scripts/generate-assets.mjs`. It uses Playwright, Chromium at /usr/bin/chromium, Python 3 and Pillow. See docs/ASSETS.md for provenance.
 
-## Browser verification
+The project pages distinguish the documented SMARTSEA BELT milestone from broader accessibility, agriculture, IoT and student/prototype development areas. No unsupported technical specifications, results or testimonials have been added.
 
-After building and starting the preview server on port 4173, run `npm run test:browser`. The script checks desktop, tablet, mobile, all five scene stages, expertise tabs, form validation, brief download, FAQs, mobile navigation and reduced motion. It saves screenshots to the ignored `artifacts/` directory. Override `TARGET_URL` and `CHROMIUM_PATH` for other environments.
+## Enquiries
 
-## Connected pages and unified motion
-
-The site now includes /about, /services, /projects, /contact and five /projects/:slug detail pages. All content is grounded in the supplied company brochure; the project pages distinguish specific milestones from broader project areas. Native links connect the pages. Static hosting must send unknown application routes to index.html (a Netlify _redirects file is included).
-
-The intro uses one Three.js InstancedMesh. Persistent image IDs gather from the tunnel walls into an open serpentine trail and then move to font-sampled word targets. A final glyph mask trims the same mesh into smooth typography. There are no crossfaded tunnel/spiral layers or separate name overlay.
-
-Run node scripts/verify-pages.mjs against the production preview to check every page at desktop and phone widths.
+The dialog validates a brief and supports preview, copy, download and opening an email draft to cefabex.cfb@gmail.com. The visitor must send the email in their email app. There is no server-side submission or simulated delivery. Form details stay in the current browser session. Connect an approved backend if automatic submission is required.

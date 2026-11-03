@@ -3,7 +3,7 @@ import * as THREE from 'three'
 import gsap from 'gsap'
 import { IMAGE_COUNT, smooth } from '../lib/scene'
 
-import { organicTile } from '../lib/organic'
+import {journeyTile,routeFor,orderGlyphs} from '../lib/journey'
 
 type Props = { progress: React.RefObject<number>; reduced: boolean; onReady: () => void }
 
@@ -13,7 +13,7 @@ export default function GalleryTunnel({ progress, reduced, onReady }: Props) {
   readyRef.current = onReady
   const [fallback, setFallback] = useState(reduced)
   const [fontReady,setFontReady]=useState(false)
-  useEffect(()=>{ document.fonts.load('500 180px "Geist Variable"').then(()=>setFontReady(true)) },[])
+  useEffect(()=>{ document.fonts.load('500 360px "Geist Variable"').then(()=>setFontReady(true)) },[])
 
   useEffect(() => {
     if (reduced) { setFallback(true); readyRef.current(); return }
@@ -23,7 +23,7 @@ export default function GalleryTunnel({ progress, reduced, onReady }: Props) {
     let alive = true
     let renderer: THREE.WebGLRenderer
     try {
-      renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true, powerPreference: 'high-performance' })
+      renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true, preserveDrawingBuffer: true, powerPreference: 'high-performance' })
     } catch { setFallback(true); readyRef.current(); return }
     setFallback(false)
     renderer.setPixelRatio(Math.min(devicePixelRatio, innerWidth < 768 ? 1.25 : 1.65))
@@ -31,14 +31,17 @@ export default function GalleryTunnel({ progress, reduced, onReady }: Props) {
     const scene = new THREE.Scene()
     const camera = new THREE.PerspectiveCamera(45, 1, .1, 150)
     camera.position.z = 22
-    const maskCanvas=document.createElement('canvas'); maskCanvas.width=1000; maskCanvas.height=200
+    const maskCanvas=document.createElement('canvas'); maskCanvas.width=2000; maskCanvas.height=400
     const ink=maskCanvas.getContext('2d')!
-    ink.fillStyle='white'; ink.textAlign='center'; ink.textBaseline='middle'; ink.font='500 180px "Geist Variable"'
-    ink.fillText('CEFABEX',500,100,980)
-    const pixels=ink.getImageData(0,0,1000,200).data
+    ink.fillStyle='white'; ink.textAlign='center'; ink.textBaseline='middle'; ink.font='500 360px "Geist Variable"'
+    ink.fillText('CEFABEX',1000,200,1960)
+    const pixels=ink.getImageData(0,0,maskCanvas.width,maskCanvas.height).data
     const targets:{x:number;y:number}[]=[]
-    for(let y=6;y<200;y+=12) for(let x=6;x<1000;x+=12) if(pixels[(y*1000+x)*4+3]>120) targets.push({x:x/1000-.5,y:(.5-y/200)*.2})
-    const count=targets.length
+    for(let y=12;y<400;y+=24) for(let x=12;x<2000;x+=24) if(pixels[(y*2000+x)*4+3]>120) targets.push({x:x/2000-.5,y:(.5-y/400)*.2})
+    const orderedTargets=orderGlyphs(targets)
+    const count=orderedTargets.length
+    canvas.dataset.imageCount=String(count)
+    let route=routeFor(orderedTargets,1)
     const maskTexture=new THREE.CanvasTexture(maskCanvas)
     const geometry = new THREE.PlaneGeometry(1, 1)
     const offsets = new Float32Array(count * 2)
@@ -128,6 +131,7 @@ export default function GalleryTunnel({ progress, reduced, onReady }: Props) {
       const w = canvas.clientWidth || innerWidth
       const h = canvas.clientHeight || innerHeight
       camera.aspect = w / h
+      route=routeFor(orderedTargets,camera.aspect)
       uniforms.uAspect.value = camera.aspect
       camera.updateProjectionMatrix()
       renderer.setSize(w, h, false)
@@ -143,14 +147,17 @@ export default function GalleryTunnel({ progress, reduced, onReady }: Props) {
       pointer.ty = (event.clientY / innerHeight - .5) * .35
     }
     const leave = () => { pointer.tx = 0; pointer.ty = 0 }
+    let lastRendered=-1
     const render = () => {
       if (!visible || document.hidden || !uniforms.atlas.value) return
       const p = progress.current
+      if(p>=40.5&&p===lastRendered)return
+      lastRendered=p
       pointer.x += (pointer.tx - pointer.x) * .035
       pointer.y += (pointer.ty - pointer.y) * .035
-      const form = smooth(.77, .985, p)
+      const form = smooth(30,38,p)
       for (let i = 0; i < count; i++) {
-        const tile = organicTile(i,count,p,camera.aspect,targets[i])
+        const tile = journeyTile(i,count,p,camera.aspect,route)
         dummy.position.set(tile.x + pointer.x * (1 - form), tile.y - pointer.y * (1 - form), tile.z)
         dummy.rotation.set(tile.rx, tile.ry, tile.rz)
         dummy.scale.set(tile.w, tile.h, 1)
@@ -160,9 +167,9 @@ export default function GalleryTunnel({ progress, reduced, onReady }: Props) {
       }
       mesh.instanceMatrix.needsUpdate = true
       geometry.attributes.aAlpha.needsUpdate = true
-      uniforms.uForm.value = smooth(.84, .975, p)
+      uniforms.uForm.value = smooth(39,40.5,p)
       uniforms.uWidth.value = Math.min(27,19.5*camera.aspect)
-      uniforms.uHole.value = 1 - smooth(.45, .58, p)
+      uniforms.uHole.value = 1 - smooth(14,20,p)
       renderer.render(scene, camera)
     }
     const contextLost = (event: Event) => { event.preventDefault(); setFallback(true); readyRef.current() }
