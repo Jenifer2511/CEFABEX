@@ -20,8 +20,3 @@ export function useReducedMotion(){
  useEffect(()=>{const media=matchMedia('(prefers-reduced-motion: reduce)');const update=()=>setReduced(media.matches);media.addEventListener('change',update);return()=>media.removeEventListener('change',update)},[])
  return reduced
 }
-
-export function scrollToPosition(top:number,duration=1.1){
- if(smooth)smooth.scrollTo(top,{duration,easing:t=>t*t*(3-2*t)})
- else window.scrollTo({top,behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth'})
-}

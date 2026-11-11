@@ -11,8 +11,10 @@ try{
  page.on('console',message=>{if(message.type()==='error')errors.push(message.text())})
  await page.addInitScript(()=>{
   window.__drawCalls=0
-  const draw=WebGL2RenderingContext.prototype.drawElements
-  WebGL2RenderingContext.prototype.drawElements=function(...args){window.__drawCalls++;return draw.apply(this,args)}
+  for(const method of ['drawElements','drawArrays']){
+   const draw=WebGL2RenderingContext.prototype[method]
+   WebGL2RenderingContext.prototype[method]=function(...args){window.__drawCalls++;return draw.apply(this,args)}
+  }
  })
  const settle=()=>page.waitForTimeout(1100)
  const scroll=async y=>{await page.evaluate(y=>window.scrollTo({top:y,behavior:'instant'}),y);await settle()}
@@ -31,13 +33,14 @@ try{
  await page.goto(target)
  await page.locator('.brand-canvas[data-context="ready"]').waitFor({timeout:20000})
  await settle()
- assert.equal(await page.locator('.brand-canvas').getAttribute('data-effect'),'particle-title-optics')
- assert.equal(await page.getByRole('heading',{name:'CEFABEX',level:1,exact:true}).count(),1)
+ assert.equal(await page.locator('.brand-canvas').getAttribute('data-effect'),'originkit-endless-square-tunnel')
+ assert.equal(await page.locator('main h1[aria-label="CEFABEX"]').count(),1)
+ assert.equal(await page.locator('.brand-resolution').evaluate(el=>getComputedStyle(el).opacity),'0','Company name is held until the final reveal')
  const cta=page.getByRole('button',{name:'Start a project',exact:true})
  assert.ok((await cta.boundingBox()).y<1000,'Hero CTA visible immediately')
  const range=await page.locator('.brand-journey').evaluate(el=>el.offsetHeight-innerHeight)
  assert.ok(range>1000,'Hero has a pinned scroll interval')
- await scroll(range*.85)
+ await scroll(range*.97)
  assert.ok(Number(await page.locator('.brand-journey').getAttribute('data-progress'))>.8)
  assert.ok(Math.abs((await page.locator('.brand-stage').boundingBox()).y)<2,'Hero stays pinned')
  const brand=page.locator('.brand-resolution')
@@ -45,10 +48,12 @@ try{
  assert.ok(await page.locator('.brand-letter').evaluateAll(els=>els.every(el=>Math.abs(new DOMMatrix(getComputedStyle(el).transform).m42)<1)),'All company letters resolve')
  await page.screenshot({path:'work/cinematic-brand-desktop.png'})
  const idle=await page.evaluate(()=>window.__drawCalls)
+ assert.ok(idle>0,'The Originkit shader has actually rendered')
  await page.waitForTimeout(400)
  assert.equal(await page.evaluate(()=>window.__drawCalls),idle,'WebGL does not render continuously at rest')
  await scroll(range*.2)
  assert.ok(Number(await page.locator('.brand-journey').getAttribute('data-progress'))<.25,'Scroll reverses the reveal')
+ assert.equal(await page.locator('.brand-resolution').evaluate(el=>getComputedStyle(el).opacity),'0','Reversing into the tunnel conceals the name again')
  await scroll(range+1000)
  const stopped=await page.evaluate(()=>window.__drawCalls)
  await page.waitForTimeout(400)
@@ -90,7 +95,7 @@ try{
    if(path==='/'){
     await page.screenshot({path:`work/cinematic-home-${width}.png`})
     const distance=await page.locator('.brand-journey').evaluate(el=>el.offsetHeight-innerHeight)
-    await scroll(distance*.85);await noOverflow()
+    await scroll(distance*.97);await noOverflow()
     assert.ok((await page.locator('.brand-name').boundingBox()).width<=width,'Company name fits mobile')
    }
   }
