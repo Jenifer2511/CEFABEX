@@ -17,3 +17,7 @@ To regenerate, run `node scripts/generate-assets.mjs`. The script uses the envir
 ## Supplied company profile
 
 The user supplied Page 1 Home Page.pdf (seven pages). The original CEFABEX logo (page1), journey photograph (page3), team photograph (page3), milestone photo (page4), and agricultural/IoT project photos (page5) were extracted as WebP to public/company. The site uses the logo, journey and IoT images. These are supplied company materials, not invented portfolio work. Contact details from page7 are used verbatim apart from formatting the Indian phone number with +91. Code-editor screenshot variants025–032 were replaced by mobile app concepts.
+
+## Current transparent logo
+
+`public/company/logo-transparent.webp` is a background-removal edit of the supplied `public/company/logo.webp`, made with the image-editing tool and optimized to 599 × 400 WebP. The original logo remains untouched. The generated edit preserves the blue chrome mark and lettering and uses a real alpha channel rather than blending away a rectangular background. Current company photography remains from the supplied brochure. The current WebGL arcs are an original geometric interpretation of the C emblem and require no third-party textures.

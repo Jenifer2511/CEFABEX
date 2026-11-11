@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import type { FormEvent } from 'react'
+import {gsap,lockScroll,useReducedMotion} from '../lib/motion'
 
 type Props = { open: boolean; onClose: () => void; initialService?: string }
 type Errors = { name?: string; email?: string; notes?: string }
@@ -11,6 +12,7 @@ function DiagonalArrow() {
 }
 
 export default function ProjectDialog({ open, onClose, initialService }: Props) {
+  const reduced=useReducedMotion()
   const dialogRef = useRef<HTMLDialogElement>(null)
   const nameRef = useRef<HTMLInputElement>(null)
   const emailRef = useRef<HTMLInputElement>(null)
@@ -33,9 +35,24 @@ export default function ProjectDialog({ open, onClose, initialService }: Props) 
     } else if (!open && dialog.open) dialog.close()
   }, [open, initialService])
 
+  useEffect(()=>{
+    lockScroll('dialog',open)
+    const dialog=dialogRef.current
+    if(!open||!dialog)return()=>lockScroll('dialog',false)
+    const tween=reduced?null:gsap.fromTo(dialog,{y:24,opacity:0},{y:0,opacity:1,duration:.5,ease:'power3.out'})
+    return()=>{tween?.kill();lockScroll('dialog',false)}
+  },[open,reduced])
+
   useEffect(() => {
     if (prepared && open) resultRef.current?.focus()
   }, [prepared, open])
+
+  useEffect(()=>{
+    if(!open||reduced||!dialogRef.current)return
+    const elements=dialogRef.current.querySelectorAll('.brief-intro,.brief-field,.brief-privacy,.brief-submit,.brief-preview,.brief-result-actions,.brief-edit')
+    const tween=gsap.fromTo(elements,{opacity:0,y:12},{opacity:1,y:0,duration:.5,stagger:.045,ease:'power3.out'})
+    return()=>{tween.kill()}
+  },[open,prepared,reduced])
 
   const brief = `CEFABEX — Project enquiry\n\nName: ${name.trim()}\nEmail: ${email.trim()}\nInterested in: ${service}\n\nThe idea\n${notes.trim()}\n`
 

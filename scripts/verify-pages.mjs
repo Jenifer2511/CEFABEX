@@ -1,4 +1,7 @@
 import {chromium} from 'playwright'
+import {mkdir} from 'node:fs/promises'
+await mkdir('work',{recursive:true})
+const target=process.env.TARGET_URL||'http://127.0.0.1:4173'
 const b=await chromium.launch({executablePath:'/usr/bin/chromium',headless:true,args:['--no-sandbox']});const p=await b.newPage();let errors=[];p.on('pageerror',e=>errors.push(e.message));
-for(const width of [1440,390]){await p.setViewportSize({width,height:900});for(const route of ['/about','/services','/projects','/projects/smartsea-belt','/projects/accessibility','/projects/agriculture','/projects/iot-websites','/projects/idea-development','/contact']){await p.goto('http://127.0.0.1:4173'+route);await p.getByRole('heading',{level:1}).waitFor();if(await p.evaluate(()=>document.documentElement.scrollWidth>innerWidth))throw Error('Overflow '+route);console.log(width,route,await p.title());if(['/about','/projects','/contact'].includes(route))await p.screenshot({path:`./artifacts/page-${width}-${route.slice(1)}.png`,fullPage:true})}}
+for(const width of [1440,390]){await p.setViewportSize({width,height:900});for(const route of ['/about','/services','/projects','/projects/smartsea-belt','/projects/accessibility','/projects/agriculture','/projects/iot-websites','/projects/idea-development','/contact']){await p.goto(target+route);await p.getByRole('heading',{level:1}).waitFor();if(await p.evaluate(()=>document.documentElement.scrollWidth>innerWidth))throw Error('Overflow '+route);console.log(width,route,await p.title());if(['/about','/projects','/contact'].includes(route))await p.screenshot({path:`./work/page-${width}-${route.slice(1)}.png`,fullPage:true})}}
 console.log('Errors',errors);await b.close();if(errors.length)process.exitCode=1

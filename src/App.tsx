@@ -2,6 +2,7 @@ import {useState} from 'react'
 import {Header, Footer, projects} from './CompanyPages'
 import ProjectDialog from './components/ProjectDialog'
 import ArrowIcon from './components/ArrowIcon'
+import BrandJourney from './components/BrandJourney'
 
 const services = [
  ['Web design & engineering', 'Fast, accessible websites and applications, from the first design to cloud deployment.'],
@@ -25,13 +26,10 @@ const questions = [
 export default function App(){
  const [enquiry,setEnquiry]=useState(false)
  return <>
-  <a className="skip-link" href="#main">Skip to content</a>
+  <a className="skip-link" href="#company">Skip to content</a>
   <Header path=""/>
   <main id="main" className="simple-home">
-   <section className="simple-hero" id="top">
-    <div><h1>Ideas into impact.</h1><p>We bring design and engineering together to build thoughtful websites, software and connected products.</p><button className="project-button" onClick={()=>setEnquiry(true)}>Start a project <ArrowIcon/></button><a className="simple-secondary" href="/projects">Explore our work <ArrowIcon/></a></div>
-    <figure><img src="/company/iot.webp" alt="CEFABEX connected hardware and laptop project" width="480" height="420"/><figcaption>Engineering ideas into working products.</figcaption></figure>
-   </section>
+   <BrandJourney onEnquire={()=>setEnquiry(true)}/>
    <section className="simple-about simple-section" id="company"><h2>One team.<br/>From idea to delivery.</h2><div><p>CEFABEX brings research, entrepreneurial thinking and engineering together to turn meaningful ideas into practical ventures.</p><p>Based in Tamil Nadu, India, our innovation and growth teams connect technical exploration with digital delivery.</p><a className="studio-text-link" href="/about">Meet CEFABEX <ArrowIcon/></a></div></section>
    <section className="simple-section" id="expertise"><div className="simple-section-heading"><h2>How we can help.</h2><a className="studio-text-link" href="/services">All services <ArrowIcon/></a></div><div className="simple-services">{services.map(([title,text])=><article key={title}><h3>{title}</h3><p>{text}</p></article>)}</div></section>
    <section className="simple-section simple-work" id="work"><div className="simple-section-heading"><h2>Work in practice.</h2><a className="studio-text-link" href="/projects">All projects <ArrowIcon/></a></div><div className="simple-projects">{projects.slice(0,3).map(p=><a href={`/projects/${p.slug}`} key={p.slug}><img src={`/company/${p.image}.webp`} alt={p.caption} loading="lazy" width="640" height="480"/><h3>{p.title}</h3><p>{p.type}</p><span className="studio-text-link">View project <ArrowIcon/></span></a>)}</div></section>
