@@ -1,0 +1,12 @@
+# Requested design and animation skills
+
+This revision follows one direction, Engineered Light, using the installed workflows requested by the user:
+
+- **UI/UX Pro Max** via Designer Skills: queried a cinematic engineering-studio design system, a technology-agency system, React guidance and Three.js disposal guidance. Applied scroll storytelling, spacious hierarchy, accessible progress, mobile simplification and resource cleanup. Retained the real brand font/palette instead of applying the search's fashion-oriented font suggestion. The cloud extension guide was readable, but its archive loader resource was unavailable through the skill reader, so the full workflow and search datasets were retrieved from the official `nextlevelbuilder/ui-ux-pro-max-skill` repository, revision `6ae86f6`, into ignored `work/`.
+- **Motion / Framer Motion**: uses the already installed `motion/react` package with LazyMotion for project image/arrow interactions and native FAQ answer/plus transitions. Uses full transform strings and reduced-motion variants; GSAP owns separate parents.
+- **Build Awwwards-Quality Sites**: established the thesis, focal asset, type/color system and chapter sequence before implementation. GSAP remains the primary system, Lenis the only smooth-scroll engine, and the site retains complete conversion content and real company assets. This is a quality target, not a claim of recognition.
+- **Animate**: rare marketing motion provides explanation/delight; interactive feedback is brief, interrupted input stays responsive, and transform/opacity are preferred. No new autoplay decorative loop was introduced.
+- **Three.js Fundamentals**: original geometry, studio environment, tone mapping, responsive perspective, bounded rendering, context recovery and complete resource disposal. The scene has one responsibility: the opening identity narrative.
+- **Web Design Guidelines**: fetched the current Vercel Web Interface Guidelines from `raw.githubusercontent.com/vercel-labs/web-interface-guidelines/main/command.md`. Reviewed the changed React components/styles for semantic controls, disclosure behavior, keyboard access, focus, image dimensions, reduced motion, touch and safe areas. Gallery focus mapping and explicit image dimensions were added during this review.
+
+No new dependency was installed for this revision. The original company logo and brochure photographs are the only photographic/brand media in the new composition; the kinetic sculpture and lighting are procedural code.

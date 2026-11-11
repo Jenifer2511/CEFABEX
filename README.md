@@ -17,11 +17,11 @@ Static hosting must route application paths to `index.html`. Vercel and Netlify 
 
 ## Current experience
 
-The homepage uses a custom CEFABEX liquid-glass corridor derived from the supplied Originkit Endless Tunnel Square code. Curved ribs, refracted light bands and cyan/pearl trails form a pinned scroll sequence: enter, travel, then reveal CEFABEX. The original source is preserved in `src/vendor/originkit/`; the custom fragment lives in `src/lib/glassCorridorShader.ts`. Absolute scroll progress replaces clock-based motion. Stopping holds the frame and reverse scrolling reverses the scene. No timed playback or autoplay remains. Company background, services, documented projects, process and questions follow the reveal. A water-inspired liquid-glass layer styles navigation, actions and selected panels.
+The homepage follows “Engineered Light”: an original Three.js chrome C sculpture aligns and separates with scroll before the cinematic CEFABEX name reveal. The company chapter uses photographic and word reveals; expertise uses alternating row choreography; projects form a pinned desktop gallery; the process unfolds through changing step numbers. Phones receive vertical work/process layouts. Motion for React handles project interactions and native FAQ details. Selected controls retain a restrained water-glass finish.
 
-GSAP choreographs distinct text and image entrances on each page. Five lightweight curtain panels handle page changes with route-specific directions, without viewport screenshots. One Lenis instance integrates with the GSAP ticker and ScrollTrigger. Menus, enquiry dialogs and page changes share scroll locks. Reduced-motion users receive a complete static opening, native scrolling and direct navigation.
+GSAP is the primary motion system. One Lenis instance integrates with its ticker and ScrollTrigger. Route-specific shutters connect the pages, while About, Services, Projects and Contact use different text/media reveals. The gallery includes previous/next controls and brings focused projects into view. Menus, enquiries and page changes share scroll locks.
 
-The tunnel is lazy-loaded, uses one WebGL2 fullscreen triangle and a bounded/adaptive pixel budget. It draws only when its pose changes, pauses when hidden or offscreen, and cleans up on route exit. The current opening does not load the previous Three.js title engine. The transparent company logo and original source asset are both retained. See [docs/DESIGN.md](docs/DESIGN.md) for attribution, scroll mapping, motion ownership and limitations.
+The Three.js scene is lazy-loaded, has an adaptive pixel budget, draws only when its pose changes, pauses offscreen/hidden, and disposes resources on exit. Context recovery rebuilds its studio lighting. Reduced motion receives complete static content, native scrolling and direct navigation, with no GPU scene or pins. The transparent company logo and brochure photographs are retained. See [docs/DESIGN.md](docs/DESIGN.md) for motion ownership and [docs/SKILL_APPLICATION.md](docs/SKILL_APPLICATION.md) for the requested skill workflows.
 
 ## Verify
 
@@ -30,6 +30,7 @@ npm run build
 # Start the preview on port 4173, then:
 npm run test:browser
 npm run test:landing
+npm run test:chapters
 npm run test:story
 node scripts/verify-pages.mjs
 ```

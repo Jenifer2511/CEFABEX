@@ -6,7 +6,7 @@ try{
  const page=await browser.newPage({viewport:{width:1280,height:900}})
  await page.goto(target)
  await page.locator('.brand-canvas[data-context="ready"]').waitFor({timeout:20000})
- assert.equal(await page.locator('.brand-canvas').getAttribute('data-effect'),'cefabex-liquid-glass-corridor')
+ assert.equal(await page.locator('.brand-canvas').getAttribute('data-effect'),'cefabex-engineered-light')
  // The sequence advances only from wheel/scroll input, holds and reverses.
  assert.equal(await page.getByRole('button',{name:'Play the reveal'}).count(),0)
  const before=Number(await page.locator('.brand-journey').getAttribute('data-progress'))
@@ -35,7 +35,7 @@ try{
  await page.evaluate(()=>window.__tunnelRecovery.restoreContext())
  await page.locator('.brand-canvas[data-context="ready"]').waitFor({timeout:15000})
  await page.evaluate(()=>scrollTo(0,(document.querySelector('.brand-journey').offsetHeight-innerHeight)*.35))
- await page.waitForTimeout(1200)
+ await page.waitForFunction(()=>Math.abs(Number(document.querySelector('.brand-canvas')?.dataset.frameProgress)-.35)<.01,{},{timeout:15000})
  assert.ok(Math.abs(Number(await page.locator('.brand-canvas').getAttribute('data-frame-progress'))-.35)<.01,'Restored tunnel redraws its scroll pose')
  assert.equal(await page.locator('.brand-canvas').evaluate(canvas=>canvas.getContext('webgl2').getError()),0,'Restored GPU resources are valid')
  assert.equal(await page.locator('.brand-journey').getAttribute('data-scene'),'ready')
@@ -47,7 +47,8 @@ try{
   HTMLCanvasElement.prototype.getContext=function(type,...args){if(type==='webgl'||type==='webgl2')return null;return original.call(this,type,...args)}
  })
  await fallback.goto(target)
- await fallback.locator('.brand-canvas[data-render-mode="fallback"]').waitFor({timeout:20000})
+ await fallback.locator('.brand-canvas[data-render-mode="fallback"]').waitFor({state:'attached',timeout:20000})
+ await fallback.locator('.brand-poster').waitFor({state:'visible'})
  await fallback.evaluate(()=>scrollTo(0,(document.querySelector('.brand-journey').offsetHeight-innerHeight)*.9))
  await fallback.waitForTimeout(1000)
  assert.equal(await fallback.locator('.brand-resolution').evaluate(el=>getComputedStyle(el).visibility),'visible')

@@ -11,7 +11,8 @@
     "test": "node tests/scene.test.mjs",
     "test:browser": "node scripts/verify-browser.mjs",
     "test:landing": "node scripts/verify-landing-scroll.mjs",
-    "test:story": "node scripts/verify-storytelling.mjs"
+    "test:story": "node scripts/verify-storytelling.mjs",
+    "test:chapters": "node scripts/verify-premium-chapters.mjs"
   },
   "dependencies": {
     "@fontsource-variable/geist": "^5.2.8",

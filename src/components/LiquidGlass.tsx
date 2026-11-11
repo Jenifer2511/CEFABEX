@@ -1,7 +1,7 @@
 import {useLayoutEffect} from 'react'
 import {useReducedMotion} from '../lib/motion'
 
-const surfaces='.page-nav,.header-action,.project-button,.studio-contact-button,.brief-submit,.brief-secondary,.brief-dialog,.journey-bottom > a,.brand-resolution-copy > a,.simple-about > div,.simple-approach li,.studio-questions details,.contact-side'
+const surfaces='.page-nav,.header-action,.project-button,.studio-contact-button,.brief-submit,.brief-secondary,.brief-dialog,.journey-bottom > a,.brand-resolution-copy > a,.contact-side'
 const controls='.header-action,.project-button,.studio-contact-button,.brief-submit,.brief-secondary,.journey-bottom > a,.brand-resolution-copy > a,.studio-questions summary'
 
 /** One delegated listener and one requested frame; no permanent animation loop. */

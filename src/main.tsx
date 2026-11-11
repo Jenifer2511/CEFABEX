@@ -6,6 +6,7 @@ import 'lenis/dist/lenis.css'
 import './cinematic.css'
 import './liquid-glass.css'
 import './title-sequence.css'
+import './premium.css'
 import SiteRouter from './SiteRouter'
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
