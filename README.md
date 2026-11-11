@@ -17,11 +17,11 @@ Static hosting must route application paths to `index.html`. Vercel and Netlify 
 
 ## Current experience
 
-The homepage follows “From question to signature”: oversized “What if.” typography splits as you scroll, a live 2D halftone field shifts from paper to cobalt, and CEFABEX resolves through letter masks. The background has a pause/resume control; pausing ambient motion still allows scroll-based reveals. Navigation, actions and dialogs use solid surfaces without glass or water effects.
+The homepage follows “From question to signature”: oversized “What if.” typography splits as you scroll, a live 2D field of halftone and water caustics shifts from paper to cobalt, and CEFABEX resolves through letter masks. The background has a pause/resume control; pausing ambient motion still allows scroll-based reveals. A strong aqua-glass material covers navigation, actions, the reveal frame, selected content panels and the enquiry dialog, with frosted depth, bright rims, pointer reflections and bounded press ripples.
 
 GSAP is the primary motion system and one Lenis instance handles smooth scrolling. Company, services, projects and process retain distinct scroll choreography. The project gallery has previous/next controls and keyboard focus mapping; phones receive vertical work/process layouts. Motion for React handles project interactions and native FAQ details. Route-specific shutters connect the other pages.
 
-The live background uses Canvas 2D, caps painting at 30 fps, pauses offscreen/hidden and disposes its resources on exit. The active application does not import Three.js or the glass runtime. Reduced motion receives complete static content and native scrolling, with no canvas or pins. The company logo/photos remain from the supplied brochure. See [docs/DESIGN.md](docs/DESIGN.md) and [docs/SKILL_APPLICATION.md](docs/SKILL_APPLICATION.md).
+The live background uses Canvas 2D, caps painting at 30 fps, pauses offscreen/hidden and disposes its resources on exit. The active application does not load a 3D renderer. Glass uses capped CSS blur and delegated pointer/press effects. Reduced motion receives complete static content and native scrolling, with no canvas or pins. The company logo/photos remain from the supplied brochure. See [docs/DESIGN.md](docs/DESIGN.md) and [docs/SKILL_APPLICATION.md](docs/SKILL_APPLICATION.md).
 
 ## Verify
 

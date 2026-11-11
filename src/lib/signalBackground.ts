@@ -1,12 +1,15 @@
-/** A live, flat halftone screen. Canvas 2D only; no scene graph or WebGL. */
+/** Live halftone and water caustics. Canvas 2D only; no 3D scene or WebGL. */
 export function createSignalBackground(canvas:HTMLCanvasElement){
  const ctx=canvas.getContext('2d',{alpha:false})
  if(!ctx)throw new Error('Canvas 2D unavailable')
- const mask=document.createElement('canvas'),maskContext=mask.getContext('2d')
+ const mask=document.createElement('canvas'),maskContext=mask.getContext('2d',{willReadFrequently:true})
  if(!maskContext)throw new Error('Canvas 2D unavailable')
  const raster=document.createElement('canvas'),rasterContext=raster.getContext('2d')
  if(!rasterContext)throw new Error('Canvas 2D unavailable')
+ const water=document.createElement('canvas'),waterContext=water.getContext('2d')
+ if(!waterContext)throw new Error('Canvas 2D unavailable')
  let rasterData=rasterContext.createImageData(1,1)
+ let waterData=waterContext.createImageData(1,1)
  let width=1,height=1,cols=1,rows=1,ratio=1,glyph=new Uint8ClampedArray(4)
  let progress=0,time=0,frame=0,lastTime=0,lastPaint=0,paintCount=0,paused=false,visible=true,lost=false,disposed=false,dirty=true
  const smooth=(a:number,b:number,n:number)=>{const t=Math.max(0,Math.min(1,(n-a)/(b-a)));return t*t*(3-2*t)}
@@ -17,6 +20,7 @@ export function createSignalBackground(canvas:HTMLCanvasElement){
   canvas.width=Math.round(width*ratio);canvas.height=Math.round(height*ratio)
   cols=width<700?48:104;rows=Math.max(1,Math.round(cols*height/width))
   raster.width=cols*4;raster.height=rows*4;rasterData=rasterContext.createImageData(raster.width,raster.height)
+  water.width=Math.round(cols*1.5);water.height=Math.round(rows*1.5);waterData=waterContext.createImageData(water.width,water.height)
   mask.width=cols;mask.height=rows
   maskContext.clearRect(0,0,cols,rows);maskContext.fillStyle='#fff';maskContext.textAlign='center';maskContext.textBaseline='middle'
   maskContext.font=`500 ${cols*.17}px "Geist Variable", sans-serif`;maskContext.letterSpacing=`${-cols*.009}px`
@@ -27,6 +31,19 @@ export function createSignalBackground(canvas:HTMLCanvasElement){
   const blue=smooth(.1,.45,progress),letter=smooth(.4,.63,progress)*(1-smooth(.79,.91,progress))
   ctx.setTransform(ratio,0,0,ratio,0,0);ctx.globalAlpha=1
   ctx.fillStyle=`rgb(${Math.round(mix(239,32,blue))},${Math.round(mix(243,56,blue))},${Math.round(mix(240,219,blue))})`;ctx.fillRect(0,0,width,height)
+  const waterPixels=waterData.data,waterRed=Math.round(mix(72,194,blue)),waterGreen=Math.round(mix(161,235,blue)),waterBlue=Math.round(mix(211,255,blue))
+  for(let y=0;y<water.height;y++){
+   const ny=y/water.height
+   for(let x=0;x<water.width;x++){
+    const nx=x/water.width
+    const fold=Math.sin(nx*11+Math.sin(ny*8+time*.15)*1.2+time*.14+progress*2)+Math.sin(ny*14-nx*2-time*.17)*.55
+    const ridge=Math.exp(-Math.abs(fold)*8),wash=Math.exp(-Math.abs(fold)*2)
+    const strength=(ridge*.55+wash*.035)*mix(.42,.72,blue)
+    const index=(y*water.width+x)*4
+    waterPixels[index]=waterRed;waterPixels[index+1]=waterGreen;waterPixels[index+2]=waterBlue;waterPixels[index+3]=Math.round(strength*255)
+   }
+  }
+  waterContext.putImageData(waterData,0,0);ctx.imageSmoothingEnabled=true;ctx.drawImage(water,0,0,width,height)
   const red=Math.round(mix(29,224,blue)),green=Math.round(mix(61,236,blue)),sky=Math.round(mix(222,255,blue)),pixels=rasterData.data
   for(let y=0;y<rows;y++){
    const ny=y/rows
@@ -35,7 +52,7 @@ export function createSignalBackground(canvas:HTMLCanvasElement){
     const sweep=.5+.5*Math.sin(nx*12-ny*8-time*.32-progress*8)
     const weave=.5+.5*Math.sin(nx*39+ny*21+time*.2)
     const envelope=mix(smooth(.27,.88,ny)*smooth(.02,.65,nx),1,blue)
-    const field=(.04+sweep*sweep*.38+weave*.08)*envelope
+    const field=(.04+sweep*sweep*.38+weave*.08)*envelope*.48
     const alpha=mix(field,glyph[(y*cols+x)*4+3]/255*.92+field*.12,letter)
     const index=((y*4+1)*raster.width+x*4+1)*4
     pixels[index]=red;pixels[index+1]=green;pixels[index+2]=sky;pixels[index+3]=alpha<.025?0:Math.round(alpha*255)
@@ -62,9 +79,9 @@ export function createSignalBackground(canvas:HTMLCanvasElement){
  const contextLost=(event:Event)=>{event.preventDefault();lost=true;cancelAnimationFrame(frame);frame=0;canvas.dataset.context='lost';running()}
  const restored=()=>{lost=false;canvas.dataset.context='ready';resize();running()}
  canvas.addEventListener('contextlost',contextLost);canvas.addEventListener('contextrestored',restored);document.addEventListener('visibilitychange',visibility)
- canvas.dataset.context='ready';canvas.dataset.effect='cefabex-signal-screen';canvas.dataset.renderMode='canvas2d';running();resize()
+ canvas.dataset.context='ready';canvas.dataset.effect='cefabex-signal-screen';canvas.dataset.material='water-caustics';canvas.dataset.renderMode='canvas2d';running();resize()
  document.fonts.ready.then(()=>{if(!disposed)resize()})
  return {update:(value:number)=>{progress=Math.max(0,Math.min(1,value));dirty=true;request(true)},setPaused:(value:boolean)=>{paused=value;cancelAnimationFrame(frame);frame=0;lastTime=0;running();if(!paused)request(true)},dispose:()=>{
-  disposed=true;cancelAnimationFrame(frame);resizeObserver.disconnect();observer.disconnect();document.removeEventListener('visibilitychange',visibility);canvas.removeEventListener('contextlost',contextLost);canvas.removeEventListener('contextrestored',restored);mask.width=mask.height=0;raster.width=raster.height=0
+  disposed=true;cancelAnimationFrame(frame);resizeObserver.disconnect();observer.disconnect();document.removeEventListener('visibilitychange',visibility);canvas.removeEventListener('contextlost',contextLost);canvas.removeEventListener('contextrestored',restored);mask.width=mask.height=0;raster.width=raster.height=0;water.width=water.height=0
  }}
 }

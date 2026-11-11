@@ -1,8 +1,8 @@
 import {useLayoutEffect} from 'react'
 import {useReducedMotion} from '../lib/motion'
 
-const surfaces='.page-nav,.header-action,.project-button,.studio-contact-button,.brief-submit,.brief-secondary,.brief-dialog,.journey-bottom > a,.brand-resolution-copy > a,.contact-side'
-const controls='.header-action,.project-button,.studio-contact-button,.brief-submit,.brief-secondary,.journey-bottom > a,.brand-resolution-copy > a,.studio-questions summary'
+const surfaces='.page-nav,.header-action,.project-button,.studio-contact-button,.brief-submit,.brief-secondary,.brief-dialog,.signal-tools,.signal-caption,.brand-glass,.about-statement,.simple-approach li,.studio-questions details,.contact-side'
+const controls='.page-nav a,.header-action,.project-button,.studio-contact-button,.brief-submit,.brief-secondary,.signal-tools button,.signal-tools a,.studio-questions summary'
 
 /** One delegated listener and one requested frame; no permanent animation loop. */
 export default function LiquidGlass({path}:{path:string}){
