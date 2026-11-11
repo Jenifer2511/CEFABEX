@@ -3,7 +3,6 @@ import App from './App'
 import CompanyPages from './CompanyPages'
 import SiteMotion from './components/SiteMotion'
 import MotionRuntime from './components/MotionRuntime'
-import LiquidGlass from './components/LiquidGlass'
 import {gsap,lockScroll,resetScroll,useReducedMotion} from './lib/motion'
 
 const routeTitle=(path:string)=>path==='/'?'CEFABEX':path.startsWith('/projects/')?'The work':({'/about':'Our story','/services':'Possibilities','/projects':'Selected work','/contact':'Let’s talk'}[path]||'CEFABEX')
@@ -55,6 +54,7 @@ export default function SiteRouter(){
   return()=>{document.removeEventListener('click',click);window.removeEventListener('popstate',pop);timeline.current?.kill();lockScroll('navigation',false)}
  },[reduced])
  useLayoutEffect(()=>{
+  document.querySelector('meta[name="theme-color"]')?.setAttribute('content',path==='/'?'#eff3f0':'#080e14')
   if(path==='/'){
    document.title='CEFABEX — Ideas into impact.'
    document.querySelector('meta[name="description"]')?.setAttribute('content','CEFABEX brings research, design and engineering together. Websites, software, connected products and ventures from Tamil Nadu, India.')
@@ -77,7 +77,7 @@ export default function SiteRouter(){
  },[path,reduced])
  return <>
   <MotionRuntime/>
-  <div id="site-content" data-route={path.split('/')[1]||'home'}>{path==='/'?<App key={path}/>:<CompanyPages key={path}/>}<SiteMotion key={`motion-${path}`} path={path}/><LiquidGlass key={`glass-${path}`} path={path}/></div>
+  <div id="site-content" data-route={path.split('/')[1]||'home'}>{path==='/'?<App key={path}/>:<CompanyPages key={path}/>}<SiteMotion key={`motion-${path}`} path={path}/></div>
   <div ref={overlay} className="page-transition" aria-hidden="true"><div className="transition-panels">{Array.from({length:5},(_,i)=><span className="transition-panel" key={i}/>)}</div><p className="transition-title">CEFABEX</p></div>
  </>
 }

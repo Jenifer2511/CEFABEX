@@ -1,22 +1,22 @@
-# Engineered Light verification
+# Signal-screen verification
 
-## Production build
+## Build
 
-`npm run build` typechecks TypeScript and produces the Vite build. The main script is approximately 164 KB gzip, the lazy Three.js engine about 126 KB gzip and the scene wrapper about 2.8 KB gzip. Vite reports its default 500 KB raw-chunk advisory for the separately lazy-loaded Three.js engine. CSS is approximately 16 KB gzip. No new dependencies were added.
+`npm run build` typechecks TypeScript and builds the app. The main script is approximately 163 KB gzip, CSS 13.7 KB gzip and the lazy 2D background 1.6 KB gzip. No Three.js engine chunk is emitted or requested by the active site. No new dependency was installed.
 
-## Behavior checks
+## Checks
 
-The production build and all four suites passed. The final responsive polish was also checked at 390 × 640, 320 × 640, 390 × 500 and 844 × 390, including CTA visibility, overflow, a matching final scroll pose and valid GL state.
+The production build and all four browser suites passed for this revision.
 
-- `npm run test:landing`: actual wheel input advances the scene; exact canvas captures hold during idle and pointer movement; reverse wheel input reverses progress. Covers context loss/restoration, a redrawn pose with valid GL state, initial WebGL failure, visible brand-poster fallback, skip navigation, live reduced motion and no-JavaScript contact content.
-- `npm run test:chapters`: checks horizontal project progression and reversal, pinned stage position, next-project control, keyboard interruption of gallery scrolling and visibility of the last project, process-number progression, phone unpinning, overflow and live reduced-motion cleanup.
-- `npm run test:browser`: checks company-name conceal/reveal/reversal, actual GPU draws, matching poses after a large scroll jump, idle/offscreen inactivity, forms, page transitions, repeated route entry, exactly three desktop pins, project-detail navigation, menu focus, responsive layouts at 1440/768/390/320 px and reduced motion.
-- `npm run test:story`: checks route curtains, footer lettering, interrupted browser history, main-content focus and cleanup on non-home pages.
+- `npm run test:landing`: actual wheel progression/reversal, exact paused canvas captures, scroll changes while ambient animation is paused, canvas context events, unavailable Canvas 2D, skip navigation, live reduced motion and no-JavaScript contact content.
+- `npm run test:chapters`: reversible horizontal gallery, controls, keyboard interruption/visibility, process progression, phone unpinning, overflow and reduced-motion cleanup.
+- `npm run test:browser`: concealed/final/reversed name, matching pose after a large jump, no WebGL draws, live canvas activity, pause/resume, offscreen inactivity, no glass surfaces, forms, routes, repeated navigation, project details, mobile menu, 1440/768/390/320 px layouts and reduced motion.
+- `npm run test:story`: route curtains, footer lettering, interrupted browser history, main-content focus and cleanup.
 
-Use `TARGET_URL` to select the production preview and `CHROMIUM_PATH` if the Chromium executable differs. Screenshots and temporary review scripts are under ignored `work/`.
+The context-event check dispatches Canvas 2D loss/restoration events to exercise application recovery; it does not claim to force a physical-device graphics failure. Screenshots and temporary visual review scripts are under ignored work/.
 
 ## Visual review
 
-The first pass captured desktop hero phases 0%, 28%, 50%, 80% and 97%, company/services/projects/process/FAQ chapters, and 768/390 px opening, name and project states. Review corrected the mobile sculpture scale/position, name text clipping, company-heading width, portrait milestone composition and a 320 px FAQ overflow. The canvas now follows the parent timeline and explicitly synchronizes on scrub completion, including rapid scroll jumps. The final checks include desktop/phone name completion and compact viewport fit.
+Desktop phases 0%, 28%, 50%, 80% and 97% and tablet/phone opening, name and project states are reviewed. Compact 390 × 640 and 844 × 390 frames check first-screen CTA visibility and overflow. The first frame uses paper/ink typography, while the reveal resolves to white on cobalt. Navigation, controls and enquiry surfaces have no backdrop blur or water effect.
 
-Chromium runs software WebGL in this environment. These checks verify behavior and bounded rendering, not a physical-device frame-rate guarantee. All hero animation remains scroll-driven; the renderer is inactive at rest and offscreen. Reduced motion receives the complete static content without any pin or canvas.
+The live background intentionally changes while idle. Its pause control, hidden-document/offscreen behavior and reduced-motion fallback are part of the experience. The company-name sequence remains bound to scroll.

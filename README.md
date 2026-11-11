@@ -17,11 +17,11 @@ Static hosting must route application paths to `index.html`. Vercel and Netlify 
 
 ## Current experience
 
-The homepage follows “Engineered Light”: an original Three.js chrome C sculpture aligns and separates with scroll before the cinematic CEFABEX name reveal. The company chapter uses photographic and word reveals; expertise uses alternating row choreography; projects form a pinned desktop gallery; the process unfolds through changing step numbers. Phones receive vertical work/process layouts. Motion for React handles project interactions and native FAQ details. Selected controls retain a restrained water-glass finish.
+The homepage follows “From question to signature”: oversized “What if.” typography splits as you scroll, a live 2D halftone field shifts from paper to cobalt, and CEFABEX resolves through letter masks. The background has a pause/resume control; pausing ambient motion still allows scroll-based reveals. Navigation, actions and dialogs use solid surfaces without glass or water effects.
 
-GSAP is the primary motion system. One Lenis instance integrates with its ticker and ScrollTrigger. Route-specific shutters connect the pages, while About, Services, Projects and Contact use different text/media reveals. The gallery includes previous/next controls and brings focused projects into view. Menus, enquiries and page changes share scroll locks.
+GSAP is the primary motion system and one Lenis instance handles smooth scrolling. Company, services, projects and process retain distinct scroll choreography. The project gallery has previous/next controls and keyboard focus mapping; phones receive vertical work/process layouts. Motion for React handles project interactions and native FAQ details. Route-specific shutters connect the other pages.
 
-The Three.js scene is lazy-loaded, has an adaptive pixel budget, draws only when its pose changes, pauses offscreen/hidden, and disposes resources on exit. Context recovery rebuilds its studio lighting. Reduced motion receives complete static content, native scrolling and direct navigation, with no GPU scene or pins. The transparent company logo and brochure photographs are retained. See [docs/DESIGN.md](docs/DESIGN.md) for motion ownership and [docs/SKILL_APPLICATION.md](docs/SKILL_APPLICATION.md) for the requested skill workflows.
+The live background uses Canvas 2D, caps painting at 30 fps, pauses offscreen/hidden and disposes its resources on exit. The active application does not import Three.js or the glass runtime. Reduced motion receives complete static content and native scrolling, with no canvas or pins. The company logo/photos remain from the supplied brochure. See [docs/DESIGN.md](docs/DESIGN.md) and [docs/SKILL_APPLICATION.md](docs/SKILL_APPLICATION.md).
 
 ## Verify
 
@@ -35,7 +35,7 @@ npm run test:story
 node scripts/verify-pages.mjs
 ```
 
-The browser suite covers the pinned/reversible name reveal, idle/offscreen WebGL, page transitions, repeated route entry, project links, FAQ, enquiry validation, mobile navigation, responsive overflow and reduced motion. `test:landing` checks the scroll scene and WebGL fallback; `test:story` checks route-specific reveals and navigation cleanup. Set `TARGET_URL` and `CHROMIUM_PATH` as needed. Screenshots and temporary files live in ignored `work/`.
+The browser suite covers the pinned/reversible name reveal, live background pause/offscreen cleanup, page transitions, repeated route entry, project links, FAQ, enquiry validation, mobile navigation, responsive overflow and reduced motion. `test:landing` checks the scroll scene and Canvas 2D fallback; `test:story` checks route-specific reveals and navigation cleanup. Set `TARGET_URL` and `CHROMIUM_PATH` as needed. Screenshots and temporary files live in ignored `work/`.
 
 `npm test` retains geometry regression tests for the historical image-gallery implementation. Those modules are not part of the current landing page. Earlier gallery and film assets remain locally available; their provenance is recorded in [docs/ASSETS.md](docs/ASSETS.md) and [docs/NEW_MEDIA.md](docs/NEW_MEDIA.md).
 

@@ -1,12 +1,12 @@
-# Requested design and animation skills
+# Design and motion workflows
 
-This revision follows one direction, Engineered Light, using the installed workflows requested by the user:
+The current direction is **From question to signature**:
 
-- **UI/UX Pro Max** via Designer Skills: queried a cinematic engineering-studio design system, a technology-agency system, React guidance and Three.js disposal guidance. Applied scroll storytelling, spacious hierarchy, accessible progress, mobile simplification and resource cleanup. Retained the real brand font/palette instead of applying the search's fashion-oriented font suggestion. The cloud extension guide was readable, but its archive loader resource was unavailable through the skill reader, so the full workflow and search datasets were retrieved from the official `nextlevelbuilder/ui-ux-pro-max-skill` repository, revision `6ae86f6`, into ignored `work/`.
-- **Motion / Framer Motion**: uses the already installed `motion/react` package with LazyMotion for project image/arrow interactions and native FAQ answer/plus transitions. Uses full transform strings and reduced-motion variants; GSAP owns separate parents.
-- **Build Awwwards-Quality Sites**: established the thesis, focal asset, type/color system and chapter sequence before implementation. GSAP remains the primary system, Lenis the only smooth-scroll engine, and the site retains complete conversion content and real company assets. This is a quality target, not a claim of recognition.
-- **Animate**: rare marketing motion provides explanation/delight; interactive feedback is brief, interrupted input stays responsive, and transform/opacity are preferred. No new autoplay decorative loop was introduced.
-- **Three.js Fundamentals**: original geometry, studio environment, tone mapping, responsive perspective, bounded rendering, context recovery and complete resource disposal. The scene has one responsibility: the opening identity narrative.
-- **Web Design Guidelines**: fetched the current Vercel Web Interface Guidelines from `raw.githubusercontent.com/vercel-labs/web-interface-guidelines/main/command.md`. Reviewed the changed React components/styles for semantic controls, disclosure behavior, keyboard access, focus, image dimensions, reduced motion, touch and safe areas. Gallery focus mapping and explicit image dimensions were added during this review.
+- **Frontend Design** informs the typographic first viewport, paper/cobalt/ink system, deliberately flat surfaces and company-specific question-to-outcome narrative.
+- **Animate** informs the separation of ambient motion and the reversible scroll sequence, bounded entrances, pause/resume behavior and reduced-motion states.
+- **Build Awwwards-Quality Sites** informs the complete responsive experience, one GSAP/Lenis system, semantic content, resource cleanup and screenshot review. It is a quality target, not an award claim. Three.js is omitted following the user's instruction.
+- **Motion / Framer Motion** remains responsible for existing project image/arrow interactions and native FAQ answer/plus transitions, on children separate from GSAP's scroll transforms.
+- **UI/UX Pro Max** informed the existing chapter progression, responsive gallery/process behavior, keyboard access and touch target sizing in the preceding revision. Its guide and search datasets came from the official nextlevelbuilder/ui-ux-pro-max-skill repository, revision 6ae86f6, because the installed cloud guide's archive loader was unavailable through the reader.
+- **Web Design Guidelines** inform semantic controls, accessible text names, visible focus, explicit image dimensions, 44 px controls, safe-area spacing and reduced motion. The live background has a visible pause control because it continues beyond five seconds.
 
-No new dependency was installed for this revision. The original company logo and brochure photographs are the only photographic/brand media in the new composition; the kinetic sculpture and lighting are procedural code.
+The active glass CSS and interaction component are removed. The Three.js scene is no longer imported. The live field uses original Canvas 2D pattern/text-mask code and the existing local Geist font. Company photography and the transparent logo remain from the supplied materials. No new dependency or external visual asset was added.

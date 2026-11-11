@@ -33,8 +33,13 @@ An earlier opening replaced the C-shaped arcs with extruded CEFABEX lettering. `
 The user supplied the complete Endless Tunnel Square component from Originkit. The normalized source is retained at `src/vendor/originkit/EndlessTunnelSquare.source.txt`, with the original fragment/vertex shader and defaults extracted unchanged into `endlessTunnelShader.ts`. Reference: https://www.originkit.dev/components/endless-tunnel-square . The previous `src/lib/glassCorridorShader.ts` is a custom derivative of its log-polar zoom mapping: curved glass ribs replace square tiles, with procedural refraction, water caustics, spiral light rails and cyan/pearl reflections. That adapter supplied absolute scroll-derived zoom and turn instead of wall-clock values. No remote request, API key, image texture or animation video is needed at runtime. Originkit attribution is retained. The company name remains accessible HTML with scroll-driven decorative echoes and a light sweep.
 
 
-## Current Engineered Light sculpture
+## Previous Engineered Light sculpture
 
 `src/lib/engineeredLightScene.ts` builds an original three-ribbon C sculpture using BufferGeometry, silver/blue physical materials, a fine orbit and a small deterministic point field. Its studio-lighting environment uses Three.js RoomEnvironment and PMREM. This is procedural geometry/lighting, not a downloaded model, image or a claim that the real company owns a physical sculpture. Three.js is the existing MIT-licensed dependency. The original transparent company logo doubles as the static fallback poster.
 
 Home photography uses the supplied journey, IoT, milestone and agriculture images. The milestone composition explicitly labels the documented Tamil Nadu State Finalist context. Company and project copy retain the brochure provenance and do not imply unsupported customers or delivery results. No external image or font request was added. The previous tunnel adapters remain in source but are not imported by the active opening.
+
+
+## Current live signal screen
+
+`src/lib/signalBackground.ts` is original flat Canvas 2D code. A regular halftone field carries moving diagonal intensity bands and samples the existing local Geist font to form CEFABEX during the scroll reveal. It uses no image texture, external footage, 3D model, fluid simulation or WebGL scene. The active page no longer imports the previous sculpture, tunnel or liquid-glass runtime. No new media asset was needed. The logo and company photography retain their supplied-brochure provenance.
