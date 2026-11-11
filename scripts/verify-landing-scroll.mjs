@@ -6,13 +6,20 @@ try{
  const page=await browser.newPage({viewport:{width:1280,height:900}})
  await page.goto(target)
  await page.locator('.brand-canvas[data-context="ready"]').waitFor({timeout:20000})
+ assert.equal(await page.locator('.brand-canvas').getAttribute('data-effect'),'particle-title-optics')
+ // A visitor can play a complete title ident without manually scrubbing.
+ await page.getByRole('button',{name:'Play the reveal'}).click()
+ await page.waitForFunction(()=>Number(document.querySelector('.brand-journey').dataset.progress)>.94,{},{timeout:10000})
+ await page.getByRole('button',{name:'Play the reveal'}).click()
+ await page.waitForFunction(()=>Number(document.querySelector('.brand-journey').dataset.progress)<.2)
+ await page.waitForFunction(()=>Number(document.querySelector('.brand-journey').dataset.progress)>.94,{},{timeout:10000})
  // A lost GPU context must not remove the text or controls.
  await page.locator('.brand-canvas').evaluate(canvas=>canvas.getContext('webgl2').getExtension('WEBGL_lose_context').loseContext())
  await page.locator('.brand-canvas[data-context="lost"]').waitFor({state:'attached'})
  await page.evaluate(()=>scrollTo(0,(document.querySelector('.brand-journey').offsetHeight-innerHeight)*.9))
  await page.waitForTimeout(1000)
  assert.equal(await page.locator('.brand-resolution').evaluate(el=>getComputedStyle(el).visibility),'visible')
- await page.locator('.brand-resolution a').click()
+ await page.locator('.journey-bottom > a').click()
  await page.waitForTimeout(1500)
  assert.ok((await page.locator('#company').boundingBox()).y<900)
  await page.close()
@@ -36,5 +43,5 @@ try{
  await staticPage.goto(target)
  await staticPage.getByRole('heading',{name:'CEFABEX. Build what comes next.'}).waitFor()
  await staticPage.getByRole('link',{name:'Email cefabex.cfb@gmail.com'}).waitFor()
- console.log('PASS: WebGL context loss, initial WebGL failure, exploration link, live reduced-motion fallback and no-JavaScript contact path.')
+ console.log('PASS: title playback/replay, WebGL context loss, initial WebGL failure, exploration link, live reduced-motion fallback and no-JavaScript contact path.')
 }finally{await browser.close()}

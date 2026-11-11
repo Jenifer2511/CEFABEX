@@ -21,3 +21,8 @@ The user supplied Page 1 Home Page.pdf (seven pages). The original CEFABEX logo 
 ## Current transparent logo
 
 `public/company/logo-transparent.webp` is a background-removal edit of the supplied `public/company/logo.webp`, made with the image-editing tool and optimized to 599 × 400 WebP. The original logo remains untouched. The generated edit preserves the blue chrome mark and lettering and uses a real alpha channel rather than blending away a rectangular background. Current company photography remains from the supplied brochure. The current WebGL arcs are an original geometric interpretation of the C emblem and require no third-party textures.
+
+
+## Current title typography and effects
+
+The current opening replaces the C-shaped arcs with actual extruded CEFABEX lettering. `src/assets/brand-typeface.json` contains only the CEFABEX glyphs, derived from the already installed Geist variable font at weight 600; `src/assets/Geist-OFL.txt` retains its license. Particle assembly, chrome shading and the optical compositing shader are original code. They require no stock footage, VFX image textures or external font request.

@@ -31,6 +31,8 @@ try{
  await page.goto(target)
  await page.locator('.brand-canvas[data-context="ready"]').waitFor({timeout:20000})
  await settle()
+ assert.equal(await page.locator('.brand-canvas').getAttribute('data-effect'),'particle-title-optics')
+ assert.equal(await page.getByRole('heading',{name:'CEFABEX',level:1,exact:true}).count(),1)
  const cta=page.getByRole('button',{name:'Start a project',exact:true})
  assert.ok((await cta.boundingBox()).y<1000,'Hero CTA visible immediately')
  const range=await page.locator('.brand-journey').evaluate(el=>el.offsetHeight-innerHeight)
