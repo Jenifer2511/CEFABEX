@@ -1,0 +1,40 @@
+:root{--margin:48px;--ease:cubic-bezier(.22,1,.36,1)}
+html{scroll-behavior:smooth}
+.page-header,.simple-home,.page-footer{max-width:1600px;margin-inline:auto}
+.page-header{padding-block:16px}.page-nav{font-size:14px}
+.simple-home h1,.simple-home h2,.simple-home h3{font-weight:600;letter-spacing:-.035em}
+.simple-home h1{font-size:60px;line-height:1;max-width:680px}
+.simple-home h2{font-size:48px;line-height:1;max-width:680px}
+.simple-home h3{font-size:24px;line-height:32px}
+.simple-home p{font-size:16px;line-height:24px}
+.simple-hero{display:grid;grid-template-columns:1.2fr 1fr;align-items:center;gap:80px;padding:64px var(--margin) 80px}
+.simple-hero>div>p{font-size:20px;line-height:28px;max-width:520px;margin-block:32px}
+.simple-hero figure{background:#f3f4f3;padding:24px}
+.simple-hero img{width:100%;height:360px;object-fit:contain}
+.simple-hero figcaption{font-size:14px;line-height:20px;margin-top:16px;color:#555}
+.simple-home .project-button{font-size:16px;font-weight:600;padding:12px 16px;gap:24px;border-radius:4px;min-height:48px}
+.simple-secondary{display:inline-flex;align-items:center;gap:12px;margin-left:24px;min-height:48px;font-size:14px}
+.simple-section{padding:80px var(--margin)}
+.simple-about{display:grid;grid-template-columns:1fr 1fr;gap:64px;background:#f3f4f3}
+.simple-about p+p{margin-top:24px}.simple-about .studio-text-link{margin-top:24px}
+.simple-section-heading{display:flex;justify-content:space-between;gap:32px;align-items:center;margin-bottom:48px}
+.simple-services{display:grid;grid-template-columns:1fr 1fr;column-gap:80px;row-gap:40px}
+.simple-services p{margin-top:12px;max-width:480px;color:#4d514e}
+.simple-work{background:#f3f4f3}
+.simple-projects{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:32px}
+.simple-projects img{width:100%;height:240px;object-fit:contain;background:white}
+.simple-projects h3{margin-top:24px;font-size:20px;line-height:28px}
+.simple-projects p{margin-top:8px;color:#4d514e;font-size:14px;line-height:20px}
+.simple-projects .studio-text-link{margin-top:12px;font-size:14px}
+.simple-approach ol{list-style:none;padding:0;display:grid;grid-template-columns:repeat(3,1fr);gap:48px;margin-top:48px}
+.simple-approach li p{margin-top:16px;color:#4d514e}
+.simple-faq{display:grid;grid-template-columns:1fr 1.3fr;gap:64px;background:#f3f4f3}
+.simple-faq .studio-questions details:first-child{border-top:0}.simple-faq summary{font-size:18px;line-height:28px;gap:24px}.simple-faq details>p{max-width:680px}
+.page-intro h1{font-size:60px;line-height:1}.page-split h2,.page-service-list h2,.project-feature h2{font-size:36px;line-height:40px}
+.page-footer-name{font-size:clamp(48px,12vw,128px);margin-block:32px}.page-footer h2{font-size:36px;line-height:40px}.page-footer .project-button{border-radius:4px;gap:24px}
+.simple-home a,.simple-home button{transition:opacity .3s var(--ease),background-color .3s var(--ease),transform .5s var(--ease)}
+@media(hover:hover){.simple-secondary:hover,.simple-projects a:hover{opacity:.75}}
+.simple-home h1[tabindex='-1']:focus{outline:none}
+@media(max-width:1000px){:root{--margin:32px}.simple-hero{gap:32px}.simple-secondary{display:flex;margin-left:0;margin-top:12px}.simple-hero img{height:300px}.simple-projects{gap:24px}.simple-approach ol{gap:24px}}
+@media(max-width:700px){:root{--margin:24px}.simple-hero{grid-template-columns:1fr;padding-block:40px 48px;gap:32px}.simple-home h1{font-size:48px;line-height:1}.simple-home h2{font-size:36px;line-height:40px}.simple-hero>div>p{font-size:18px;line-height:28px;margin-block:24px}.simple-hero img{height:240px}.simple-hero figure{padding:16px}.simple-secondary{display:inline-flex;margin-left:16px;margin-top:0}.simple-section{padding-block:48px}.simple-about,.simple-faq{grid-template-columns:1fr;gap:32px}.simple-section-heading{align-items:start;flex-direction:column;gap:16px;margin-bottom:32px}.simple-services,.simple-projects,.simple-approach ol{grid-template-columns:1fr;gap:32px}.simple-projects img{height:280px}.simple-approach ol{margin-top:32px}.page-intro h1{font-size:48px}.page-footer .site-page-links{gap:24px}.page-nav.open{animation-duration:.3s}.simple-faq summary{font-size:16px;line-height:24px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation:none!important;transition:none!important}}

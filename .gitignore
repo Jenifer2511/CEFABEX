@@ -7,3 +7,5 @@ dist/
 .taste-skill/
 artifacts/
 *.log
+
+work/

@@ -1,150 +1,44 @@
-import { useCallback, useEffect, useRef, useState } from 'react'
-import { AnimatePresence, motion, useReducedMotion } from 'motion/react'
-import gsap from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import Lenis from 'lenis'
-import GalleryTunnel from './components/GalleryTunnel'
-import Loader from './components/Loader'
-import StudioContent from './components/StudioContent'
+import {useState} from 'react'
+import {Header, Footer, projects} from './CompanyPages'
 import ProjectDialog from './components/ProjectDialog'
 import ArrowIcon from './components/ArrowIcon'
-import {SiteLinks} from './CompanyPages'
-import CompanyStory from './components/CompanyStory'
-import {JOURNEY,journeyChapter,journeyPhase} from './lib/journey'
-import HomeScrollMotion from './components/HomeScrollMotion'
-import CapabilityCarousel from './components/CapabilityCarousel'
-import StoryThread from './components/StoryThread'
 
-gsap.registerPlugin(ScrollTrigger)
-const phrases = [
-  { title: 'Let’s start.', detail: 'With a spark. A question. An idea worth building.' },
-  { title: 'Think beyond.', detail: 'The familiar. The expected. The way it’s always been.' },
-  { title: 'Build what’s next.', detail: 'Thoughtfully designed. Beautifully engineered.' },
+const services = [
+ ['Web design & engineering', 'Fast, accessible websites and applications, from the first design to cloud deployment.'],
+ ['CAD & automation', 'Precision 2D and 3D models that turn engineering drafts into practical designs.'],
+ ['Digital marketing & strategy', 'Search optimization, brand development and campaigns built around your business.'],
+ ['IoT & project development', 'Connected hardware, engineering prototypes and guidance for student projects.'],
+ ['Career infrastructure', 'Considered resumes and digital portfolios for your next professional step.'],
 ]
-const easing = [.22, 1, .36, 1] as const
+const steps = [
+ ['Understand', 'We discuss your idea, your audience and the problem to solve, then agree on a clear scope.'],
+ ['Design & build', 'Design and engineering work together, with regular reviews and practical decisions.'],
+ ['Launch & support', 'We test the details, prepare the handover and agree on the support you need next.'],
+]
+const questions = [
+ ['Can you help shape an early idea?', 'Yes. We can start with your audience, the problem you want to solve and what a useful first release looks like. You do not need a finished specification.'],
+ ['Can you improve an existing product?', 'Yes. We review the experience and technical foundations, then agree on focused improvements or a broader redesign.'],
+ ['How are timing and cost agreed?', 'After understanding the scope and complexity, we propose clear deliverables, a realistic schedule and a cost for you to review.'],
+ ['What happens after launch?', 'We discuss handover, documentation and ongoing support as part of the project scope.'],
+]
 
-function Brand() {
-  return <a href="#top" className="brand" aria-label="CEFABEX home"><img className="company-logo" src="/company/logo.webp" alt="CEFABEX" width="110" height="74" /></a>
-}
-
-export default function App() {
-  const reduced = Boolean(useReducedMotion())
-  const [loaded, setLoaded] = useState(false)
-  const [started,setStarted]=useState(false)
-  const [ready, setReady] = useState(false)
-  const [chapter, setChapter] = useState(0)
-  const [menu, setMenu] = useState(false)
-  const [enquiry, setEnquiry] = useState(false)
-  const [service, setService] = useState<string>()
-  const progress = useRef(0)
-  const sceneRef = useRef<HTMLElement>(null)
-  const stageRef = useRef<HTMLDivElement>(null)
-  const chapterRef=useRef(0)
-  const progressBar = useRef<HTMLDivElement>(null)
-  const lenisRef = useRef<Lenis | null>(null)
-  const complete = useCallback(() => setLoaded(true), [])
-  const onReady = useCallback(() => setReady(true), [])
-  const openEnquiry = useCallback((type?: string) => { setService(type); setEnquiry(true); setMenu(false) }, [])
-  const scrollToPosition=useCallback((position:number,immediate=false)=>{
-    if(lenisRef.current)lenisRef.current.scrollTo(position,{duration:1.1,immediate})
-    else window.scrollTo({top:position,behavior:'instant'})
-  },[])
-
-  useEffect(() => {
-    if (reduced) { setLoaded(true);setStarted(true); return }
-    // The loader remains escapable, even if a graphics driver or asset stalls.
-    const timeout = setTimeout(() => setReady(true), 7000)
-    return () => clearTimeout(timeout)
-  }, [reduced])
-
-  useEffect(() => {
-    document.body.style.overflow = !loaded || menu || enquiry ? 'hidden' : ''
-    const lenis = lenisRef.current
-    if (!loaded || menu || enquiry) lenis?.stop()
-    else lenis?.start()
-    return () => { document.body.style.overflow = '' }
-  }, [loaded, menu, enquiry])
-
-  useEffect(() => {
-    if (reduced) return
-    const lenis = new Lenis({ duration: 1.15, smoothWheel: true, anchors: { offset: -80, duration: 1.4 } })
-    lenisRef.current = lenis
-    lenis.on('scroll', ScrollTrigger.update)
-    const ticker = (time: number) => lenis.raf(time * 1000)
-    gsap.ticker.add(ticker)
-    if (!loaded) lenis.stop()
-    return () => { gsap.ticker.remove(ticker); lenis.destroy(); lenisRef.current = null }
-    // Stable smooth-scroll instance; loader/menu effects start and stop it.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [reduced])
-
-  useEffect(() => {
-    if (!sceneRef.current || reduced || !loaded || !started) return
-    const update=(value:number)=>{
-      progress.current=value*JOURNEY.span
-      const stage=stageRef.current
-      if(stage){stage.dataset.journeyPosition=String(progress.current);stage.dataset.scrollProgress=String(value);stage.dataset.phase=journeyPhase(progress.current)}
-      const next=journeyChapter(progress.current)
-      if(next!==chapterRef.current){chapterRef.current=next;setChapter(next)}
-      progressBar.current?.style.setProperty('transform',`scaleX(${value})`)
-    }
-    const trigger=ScrollTrigger.create({trigger:sceneRef.current,start:'top top',end:'bottom bottom',onUpdate:self=>update(self.progress),onRefresh:self=>update(self.progress)})
-    document.fonts.ready.then(()=>ScrollTrigger.refresh())
-    return()=>trigger.kill()
-  },[reduced,loaded,started])
-
-  useEffect(() => {
-    if (!menu) return
-    const key = (e: KeyboardEvent) => { if (e.key === 'Escape') { setMenu(false); document.querySelector<HTMLButtonElement>('.menu-toggle')?.focus() } }
-    window.addEventListener('keydown', key)
-    return () => window.removeEventListener('keydown', key)
-  }, [menu])
-
-  return <>
-    <a className="skip-link" href="#expertise" onClick={complete}>Skip to company information</a>
-    <AnimatePresence onExitComplete={()=>setStarted(true)}>{!loaded && !reduced && <Loader ready={ready} onComplete={complete} />}</AnimatePresence>
-    <div inert={!loaded}>
-      <header className="site-header">
-        <Brand />
-        <nav className="desktop-nav" aria-label="Main navigation"><a href="#top" aria-current="page">Home</a><a href="/about">About</a><a href="/services">Services</a><a href="/projects">Projects</a><a href="/contact">Contact</a></nav>
-        <button className="project-button" onClick={() => openEnquiry()}>Start a project <ArrowIcon /></button>
-        <button className={`menu-toggle ${menu ? 'is-open' : ''}`} aria-label={menu ? 'Close menu' : 'Open menu'} aria-expanded={menu} aria-controls="mobile-navigation" onClick={() => setMenu(!menu)}><span /><span /></button>
-      </header>
-      <AnimatePresence>{menu && <motion.nav id="mobile-navigation" className="mobile-navigation" aria-label="Mobile navigation" initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} transition={{ duration: .3 }}>
-        {['Home', 'About', 'Services', 'Projects', 'Contact'].map((label, i) => <motion.a key={label} href={['#top', '/about', '/services', '/projects', '/contact'][i]} onClick={() => setMenu(false)} initial={{ y: 24, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: i * .06, ease: easing }}>{label}<ArrowIcon /></motion.a>)}
-        <p>Thoughtful design.<br />Exceptional engineering.</p>
-      </motion.nav>}</AnimatePresence>
-      <main inert={menu} data-homepage="">
-        <section ref={sceneRef} id="top" className={`cinema scroll-cinema ${reduced ? 'is-reduced' : ''}`} aria-label="CEFABEX introduction">
-          <div ref={stageRef} className="cinema-stage" data-chapter={chapter} data-journey-position="0" data-scroll-progress="0" data-phase="tunnel">
-            <GalleryTunnel progress={progress} reduced={reduced} onReady={onReady} />
-            <div className="hero-center">
-              <h1 className="sr-only">CEFABEX. Websites, apps and software. Build what comes next.</h1>
-              <AnimatePresence mode="wait">
-                {(chapter < 3 || reduced) && <motion.div key={reduced ? 'reduced' : chapter} className="phrase" initial={false} animate={{ y: 0, opacity: 1, filter: 'blur(0px)' }} exit={{ y: -28, opacity: 0, filter: 'blur(5px)' }} transition={{ duration: .48, ease: easing }}>
-                  <motion.p className="hero-title" aria-hidden="true" key={`title-${chapter}`} initial={loaded ? { y: 32, opacity: 0 } : false} animate={{ y: 0, opacity: 1 }} transition={{ duration: .8, ease: easing }}>{reduced ? 'Build what’s next.' : phrases[chapter].title}</motion.p>
-                  <p className="hero-description">We turn ambitious ideas into<br className="desktop-break" /> thoughtful websites, apps & software.</p>
-                  <p className="phrase-detail">{reduced ? phrases[2].detail : phrases[chapter].detail}</p>
-                </motion.div>}
-              </AnimatePresence>
-            </div>
-            <AnimatePresence>{chapter === 3 && !reduced && <motion.div className="spiral-copy" initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} transition={{ duration: .6 }}><p>A thousand possibilities.<br />One continuous thread.</p></motion.div>}</AnimatePresence>
-            <AnimatePresence>{chapter === 4 && !reduced && <motion.div className="brand-resolve" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} transition={{ duration: .7 }}><p>Many possibilities. One partner.</p><a className="text-action" href="#company">Meet CEFABEX <ArrowIcon down /></a></motion.div>}</AnimatePresence>
-            <div className="cinema-bottom">
-              <a className="scroll-prompt" href="#company"><span className="scroll-circle" aria-hidden="true">↓</span><span>Scroll to explore</span></a>
-              <div className="chapter-indicator" aria-label={`Introduction chapter ${Math.min(chapter + 1, 3)} of 3`}><span className={chapter === 0 ? 'active' : ''} /><span className={chapter === 1 ? 'active' : ''} /><span className={chapter >= 2 ? 'active' : ''} /></div>
-              <a className="skip-intro" href="#company">Skip the journey <ArrowIcon /></a>
-            </div>
-            <div className="cinema-progress"><div ref={progressBar} /></div>
-          </div>
-        </section>
-        <CapabilityCarousel ready={loaded&&started} onScrollTo={scrollToPosition} onEnquire={openEnquiry}/>
-        <CompanyStory />
-        <StudioContent ready={loaded&&started} onEnquire={openEnquiry} onScrollTo={scrollToPosition} /><SiteLinks/>
-        <HomeScrollMotion ready={loaded&&started}/>
-        <StoryThread ready={loaded&&started}/>
-      </main>
-    </div>
-    <ProjectDialog open={enquiry} onClose={() => setEnquiry(false)} initialService={service} />
-  </>
+export default function App(){
+ const [enquiry,setEnquiry]=useState(false)
+ return <>
+  <a className="skip-link" href="#main">Skip to content</a>
+  <Header path=""/>
+  <main id="main" className="simple-home">
+   <section className="simple-hero" id="top">
+    <div><h1>Ideas into impact.</h1><p>We bring design and engineering together to build thoughtful websites, software and connected products.</p><button className="project-button" onClick={()=>setEnquiry(true)}>Start a project <ArrowIcon/></button><a className="simple-secondary" href="/projects">Explore our work <ArrowIcon/></a></div>
+    <figure><img src="/company/iot.webp" alt="CEFABEX connected hardware and laptop project" width="480" height="420"/><figcaption>Engineering ideas into working products.</figcaption></figure>
+   </section>
+   <section className="simple-about simple-section" id="company"><h2>One team.<br/>From idea to delivery.</h2><div><p>CEFABEX brings research, entrepreneurial thinking and engineering together to turn meaningful ideas into practical ventures.</p><p>Based in Tamil Nadu, India, our innovation and growth teams connect technical exploration with digital delivery.</p><a className="studio-text-link" href="/about">Meet CEFABEX <ArrowIcon/></a></div></section>
+   <section className="simple-section" id="expertise"><div className="simple-section-heading"><h2>How we can help.</h2><a className="studio-text-link" href="/services">All services <ArrowIcon/></a></div><div className="simple-services">{services.map(([title,text])=><article key={title}><h3>{title}</h3><p>{text}</p></article>)}</div></section>
+   <section className="simple-section simple-work" id="work"><div className="simple-section-heading"><h2>Work in practice.</h2><a className="studio-text-link" href="/projects">All projects <ArrowIcon/></a></div><div className="simple-projects">{projects.slice(0,3).map(p=><a href={`/projects/${p.slug}`} key={p.slug}><img src={`/company/${p.image}.webp`} alt={p.caption} loading="lazy" width="640" height="480"/><h3>{p.title}</h3><p>{p.type}</p><span className="studio-text-link">View project <ArrowIcon/></span></a>)}</div></section>
+   <section className="simple-section simple-approach" id="approach"><h2>A clear path forward.</h2><ol>{steps.map(([title,text])=><li key={title}><h3>{title}</h3><p>{text}</p></li>)}</ol></section>
+   <section className="simple-section simple-faq" id="questions"><h2>Before we begin.</h2><div className="studio-questions">{questions.map(([question,answer])=><details key={question}><summary>{question}<span aria-hidden="true">+</span></summary><p>{answer}</p></details>)}</div></section>
+  </main>
+  <Footer/>
+  <ProjectDialog open={enquiry} onClose={()=>setEnquiry(false)}/>
+ </>
 }
