@@ -25,3 +25,12 @@ Reduced motion destroys the smooth-scroll engine, bypasses pinning, WebGL, split
 ## Validation limits
 
 Browser checks and measurements use headless Chromium with software WebGL, not a physical phone GPU. These checks establish behavior, cleanup, idle rendering and responsive fit; they are not a guarantee of a particular frame rate on every device. Historical gallery, page-curl and film components remain in the source and public asset history but are not imported by the current entry point.
+
+
+## Liquid glass layer
+
+The requested water-inspired glass treatment is concentrated on the navigation capsule, primary actions, exploration links, company introduction, process panels, FAQ rows, contact panel and enquiry dialog. Translucent blue tints, specular edge highlights, static caustic gradients and bounded backdrop blur create the material. The logo stays transparent and the large editorial sections retain the underlying graphite/silver palette.
+
+`LiquidGlass.tsx` delegates pointer input to one listener and requests one animation frame for a moving highlight. Press ripples run for 850 ms, with at most one per surface, and remove themselves. Dynamic enquiry result controls receive the same material via a child-list observer; the observer, listeners, pending frame and ripples clean up on navigation. Text itself is not distorted. This is CSS glass and a water-inspired highlight/ripple treatment, not a fluid simulation or an additional WebGL rendering pass.
+
+Desktop blur is capped at 14 px and mobile blur at 8 px. Form fields avoid nested backdrop filters. Reduced motion suppresses pointer highlights and ripples; reduced transparency substitutes solid materials, and forced-colors mode uses system colors. Browsers without backdrop filtering retain the tinted surfaces and contrast. No new dependency, image asset or permanent animation loop is introduced.

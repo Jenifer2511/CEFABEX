@@ -17,7 +17,7 @@ Static hosting must route application paths to `index.html`. Vercel and Netlify 
 
 ## Current experience
 
-The homepage pins a Three.js C-shaped aperture while scroll reveals the CEFABEX name. The sequence reverses with scroll, and the project enquiry and exploration link are available immediately. The rest of the homepage covers company background, services, documented projects, process and questions.
+The homepage pins a Three.js C-shaped aperture while scroll reveals the CEFABEX name. The sequence reverses with scroll, and the project enquiry and exploration link are available immediately. The rest of the homepage covers company background, services, documented projects, process and questions. A water-inspired liquid-glass layer adds frosted navigation, translucent actions and selected panels, pointer highlights and short press ripples.
 
 GSAP choreographs distinct text and image entrances on each page. Five lightweight curtain panels handle page changes with route-specific directions, without viewport screenshots. One Lenis instance integrates with the GSAP ticker and ScrollTrigger. Menus, enquiry dialogs and page changes share scroll locks. Reduced-motion users receive a complete static opening, native scrolling and direct navigation.
 

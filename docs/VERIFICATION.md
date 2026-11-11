@@ -15,3 +15,7 @@ Screenshots are recorded in ignored `work/`. Visual review covers desktop and mo
 Chromium uses SwiftShader for WebGL in this environment. Checks establish responsive fit, correct interactions and bounded rendering. They do not establish a physical device's GPU frame rate. The scene uses one shared geometry, three draw calls, no textures/postprocessing, capped DPR and on-demand frames; it pauses while hidden/offscreen and disposes on route exit.
 
 No numerical design-inspector score, hardware frame-rate guarantee or award recognition is claimed. The design follows the cinematic-site skill alongside the landing-page design guidance; asset provenance and motion ownership are recorded in [DESIGN.md](DESIGN.md).
+
+## Liquid glass revision
+
+The glass layer was inspected in desktop/mobile screenshots, including the navigation, contact panel, mobile menu and enquiry dialog. A focused Chromium check verified pointer-following highlights, the newly mounted enquiry-result controls, self-removing press ripples, mobile overflow and suppressed ripples under reduced motion. The production build passes; no dependency or WebGL pass was added. See the liquid-glass section in [DESIGN.md](DESIGN.md) for material and fallback details.
