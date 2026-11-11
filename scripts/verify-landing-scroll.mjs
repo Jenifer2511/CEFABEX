@@ -6,7 +6,7 @@ try{
  const page=await browser.newPage({viewport:{width:1280,height:900}})
  await page.goto(target)
  await page.locator('.brand-canvas[data-context="ready"]').waitFor({timeout:20000})
- assert.equal(await page.locator('.brand-canvas').getAttribute('data-effect'),'originkit-endless-square-tunnel')
+ assert.equal(await page.locator('.brand-canvas').getAttribute('data-effect'),'cefabex-liquid-glass-corridor')
  // The sequence advances only from wheel/scroll input, holds and reverses.
  assert.equal(await page.getByRole('button',{name:'Play the reveal'}).count(),0)
  const before=Number(await page.locator('.brand-journey').getAttribute('data-progress'))

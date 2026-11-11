@@ -1,4 +1,4 @@
-/* The user-supplied Originkit tunnel is the scene; GSAP scroll reveals the name. */
+/* Custom glass corridor derived from the supplied Originkit mapping; scroll reveals the name. */
 .originkit-sequence{height:420svh;background:#05070b}
 .originkit-sequence .brand-stage{min-height:660px;background:#05070b}
 .originkit-sequence .brand-canvas{z-index:0;transform:none;opacity:1;width:100%;height:100%}

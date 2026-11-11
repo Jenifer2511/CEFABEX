@@ -20,14 +20,14 @@ The user supplied Page 1 Home Page.pdf (seven pages). The original CEFABEX logo 
 
 ## Current transparent logo
 
-`public/company/logo-transparent.webp` is a background-removal edit of the supplied `public/company/logo.webp`, made with the image-editing tool and optimized to 599 × 400 WebP. The original logo remains untouched. The generated edit preserves the blue chrome mark and lettering and uses a real alpha channel rather than blending away a rectangular background. Current company photography remains from the supplied brochure. The current WebGL arcs are an original geometric interpretation of the C emblem and require no third-party textures.
+`public/company/logo-transparent.webp` is a background-removal edit of the supplied `public/company/logo.webp`, made with the image-editing tool and optimized to 599 × 400 WebP. The original logo remains untouched. The generated edit preserves the blue chrome mark and lettering and uses a real alpha channel rather than blending away a rectangular background. Current company photography remains from the supplied brochure.
 
 
 ## Previous title typography and effects
 
-The current opening replaces the C-shaped arcs with actual extruded CEFABEX lettering. `src/assets/brand-typeface.json` contains only the CEFABEX glyphs, derived from the already installed Geist variable font at weight 600; `src/assets/Geist-OFL.txt` retains its license. Particle assembly, chrome shading and the optical compositing shader are original code. They require no stock footage, VFX image textures or external font request.
+An earlier opening replaced the C-shaped arcs with extruded CEFABEX lettering. `src/assets/brand-typeface.json` contains only the CEFABEX glyphs, derived from the already installed Geist variable font at weight 600; `src/assets/Geist-OFL.txt` retains its license. Particle assembly, chrome shading and the optical compositing shader are original code. These historical assets are not imported by the current opening.
 
 
-## Current Originkit tunnel
+## Current liquid-glass corridor
 
-The user supplied the complete Endless Tunnel Square component from Originkit. The normalized source is retained at `src/vendor/originkit/EndlessTunnelSquare.source.txt`, with the fragment/vertex shader and defaults extracted unchanged into `endlessTunnelShader.ts`. Reference: https://www.originkit.dev/components/endless-tunnel-square . The production adapter supplies scroll-derived zoom, turn and glow uniforms instead of the source component's wall-clock values. The blue base tint matches CEFABEX's current palette. No remote request, API key, image texture or animation video is needed at runtime. Originkit attribution is retained. The previously implemented extruded title and its font subset remain in source history but are not imported by the current entry point.
+The user supplied the complete Endless Tunnel Square component from Originkit. The normalized source is retained at `src/vendor/originkit/EndlessTunnelSquare.source.txt`, with the original fragment/vertex shader and defaults extracted unchanged into `endlessTunnelShader.ts`. Reference: https://www.originkit.dev/components/endless-tunnel-square . The active `src/lib/glassCorridorShader.ts` is a custom derivative of its log-polar zoom mapping: curved glass ribs replace square tiles, with procedural refraction, water caustics, spiral light rails and cyan/pearl reflections. The production adapter supplies absolute scroll-derived zoom and turn instead of wall-clock values. No remote request, API key, image texture or animation video is needed at runtime. Originkit attribution is retained. The company name remains accessible HTML with scroll-driven decorative echoes and a light sweep.

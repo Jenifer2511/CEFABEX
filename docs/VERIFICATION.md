@@ -1,6 +1,6 @@
-# Current verification — Originkit scroll sequence
+# Current verification — Liquid-glass scroll sequence
 
-The opening now uses the actual Endless Tunnel Square fragment shader from the source supplied by the user. Its extracted fragment text was compared against the preserved component and matches exactly. The production TypeScript/Vite build passes. The tunnel adapter is a separate lazy chunk of about 5 KB gzipped; the previous Three.js title engine is not part of this opening's bundle.
+The opening uses a custom curved-glass fragment derived from the user-supplied Originkit mapping. The original component and extracted shaders remain unchanged in the vendor directory. The production TypeScript/Vite build passes. The corridor adapter is a separate lazy chunk of about 3.3 KB gzipped; the previous Three.js title engine is not part of this opening's bundle. The active canvas identifies itself as `cefabex-liquid-glass-corridor`, with `originkit-derived` provenance.
 
 ## Browser checks
 
@@ -12,7 +12,7 @@ The production build, tunnel/fallback suite and full browser suite passed for th
 
 ## Visual inspection
 
-Desktop frames at 0%, 25%, 50% and 85% and mobile frames at 0%, 50% and 85% were inspected. They show the supplied square tunnel, scroll-driven travel and the concluding name reveal. The name finishes by 97% of the pinned interval. Compact 390 × 640 portrait and 844 × 390 landscape layouts were also checked for first-screen CTA visibility and horizontal overflow. Screenshots are saved under ignored `work/`.
+Desktop frames at 0%, 25%, 50% and 85% and mobile frames at 0%, 50% and 85% show the new glass corridor, scroll-driven travel and the concluding name reveal. Curved ribs, cyan reflections and pearl light trails replace the original square tile pattern. The name finishes by 97% of the pinned interval. Compact 390 × 640 portrait and 844 × 390 landscape layouts retain the previously checked CTA positioning. Screenshots are saved under ignored `work/`.
 
 ## Performance and limitations
 
@@ -23,4 +23,4 @@ Chromium uses SwiftShader in this environment. Checks establish behavior, respon
 
 ## Cinematic name finish
 
-Desktop reveal frames at 62%, 70%, 80%, 90% and 98%, and mobile frames at 70%, 80% and 98%, were inspected. A focused browser check confirmed an unchanged name composition while idle, no mobile overflow and a complete static heading with hidden decorative layers under reduced motion. The Originkit shader is unchanged; the added title effects are driven by the existing scroll timeline.
+The preceding title revision was inspected at desktop progress 62%, 70%, 80%, 90% and 98%, and mobile progress 70%, 80% and 98%. Its idle composition, mobile fit and static reduced-motion heading were verified. This background revision retains that title choreography; the new corridor and retained name effects share the existing scroll progress.
