@@ -29,7 +29,11 @@ export default function BrandJourney({onEnquire}:{onEnquire:()=>void}){
   const element=root.current
   const context=gsap.context(()=>{
    gsap.set('.brand-resolution',{opacity:0})
-   gsap.set('.brand-letter',{yPercent:115,rotationX:-35})
+   gsap.set('.brand-name',{opacity:0,scale:.38,z:-240,rotationX:18,transformPerspective:1000,transformOrigin:'50% 50%'})
+   gsap.set('.brand-letter',{opacity:0,xPercent:i=>(i-3)*16,yPercent:i=>i%2?18:-18,rotationZ:i=>(i-3)*-1.2})
+   gsap.set('.name-echo',{opacity:0,scale:.5})
+   gsap.set('.name-sheen',{opacity:0,backgroundPosition:'170% 50%'})
+   gsap.set('.name-axis',{opacity:0,scaleX:0})
    gsap.set('.title-signature',{opacity:0,y:16})
    gsap.set('.journey-progress-fill',{scaleX:0,transformOrigin:'left'})
    const timeline=gsap.timeline({scrollTrigger:{id:'brand-reveal',trigger:element,start:'top top',end:'bottom bottom',pin:element.querySelector('.brand-stage'),pinSpacing:false,scrub:.55,anticipatePin:1,invalidateOnRefresh:true,onUpdate:self=>{
@@ -41,9 +45,19 @@ export default function BrandJourney({onEnquire}:{onEnquire:()=>void}){
     .fromTo('.tunnel-waypoint',{opacity:0,y:20},{opacity:1,y:0,duration:.1},.29)
     .to('.tunnel-waypoint',{opacity:0,y:-20,duration:.1},.46)
     .to('.brand-canvas',{opacity:.1,duration:.24},.62)
-    .set('.brand-resolution',{opacity:1},.64)
-    .to('.brand-letter',{yPercent:0,rotationX:0,duration:.18,stagger:.018,ease:'power3.out'},.65)
-    .to('.title-signature',{opacity:1,y:0,duration:.13},.84)
+    .set('.brand-resolution',{opacity:1},.59)
+    .to('.name-axis',{opacity:.8,scaleX:1.15,duration:.1,ease:'power2.out'},.59)
+    .to('.name-axis',{opacity:0,scaleX:1.5,duration:.13},.7)
+    .to('.name-echo-far',{opacity:.32,scale:1.32,duration:.13,ease:'power2.out'},.59)
+    .to('.name-echo-far',{opacity:0,scale:1.5,duration:.16},.72)
+    .to('.name-echo-near',{opacity:.4,scale:1.08,duration:.15,ease:'power3.out'},.62)
+    .to('.name-echo-near',{opacity:0,scale:1,duration:.13},.77)
+    .to('.brand-name',{opacity:1,scale:1,z:0,rotationX:0,duration:.25,ease:'power3.out'},.61)
+    .to('.brand-letter',{opacity:1,xPercent:0,yPercent:0,rotationZ:0,duration:.18,stagger:.009,ease:'power3.out'},.65)
+    .set('.name-sheen',{opacity:1},.78)
+    .to('.name-sheen',{backgroundPosition:'-70% 50%',duration:.16,ease:'power2.inOut'},.78)
+    .to('.name-sheen',{opacity:0,duration:.025},.94)
+    .to('.title-signature',{opacity:1,y:0,duration:.12},.86)
     .to('.journey-progress-fill',{scaleX:1,duration:1,ease:'none'},0)
    const observer=new ResizeObserver(()=>ScrollTrigger.refresh());observer.observe(element)
    return()=>observer.disconnect()
@@ -57,7 +71,13 @@ export default function BrandJourney({onEnquire}:{onEnquire:()=>void}){
     <div className="tunnel-opening"><p>Step into<br/>what’s next.</p><span>A journey from possibility to impact.</span></div>
     <p className="tunnel-waypoint" aria-hidden="true">A different perspective.</p>
     <div className="brand-resolution">
-     <h1 className="brand-name" aria-label="CEFABEX">{'CEFABEX'.split('').map((letter,i)=><span className="brand-letter-mask" aria-hidden="true" key={i}><span className="brand-letter">{letter}</span></span>)}</h1>
+     <div className="name-stage">
+      <div className="name-axis" aria-hidden="true"/>
+      <div className="name-echo name-echo-far" aria-hidden="true">{'CEFABEX'.split('').map((letter,i)=><span key={i}>{letter}</span>)}</div>
+      <div className="name-echo name-echo-near" aria-hidden="true">{'CEFABEX'.split('').map((letter,i)=><span key={i}>{letter}</span>)}</div>
+      <h1 className="brand-name" aria-label="CEFABEX">{'CEFABEX'.split('').map((letter,i)=><span className="brand-letter-mask" aria-hidden="true" key={i}><span className="brand-letter">{letter}</span></span>)}</h1>
+      <div className="name-sheen" aria-hidden="true">{'CEFABEX'.split('').map((letter,i)=><span key={i}>{letter}</span>)}</div>
+     </div>
      <p className="title-signature">Innovation. Engineering. Growth.</p>
     </div>
     <div className="title-description"><p>Ideas, engineered into impact.</p><p>Research, digital experiences<br/>and connected products.</p></div>

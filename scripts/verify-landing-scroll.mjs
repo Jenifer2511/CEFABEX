@@ -27,6 +27,8 @@ try{
  await page.evaluate(()=>scrollTo(0,(document.querySelector('.brand-journey').offsetHeight-innerHeight)*.9))
  await page.waitForTimeout(1000)
  assert.equal(await page.locator('.brand-resolution').evaluate(el=>getComputedStyle(el).visibility),'visible')
+ assert.equal(await page.locator('.brand-name').evaluate(el=>getComputedStyle(el).opacity),'1','Fallback title stays readable')
+ assert.equal(await page.locator('.name-echo-far').evaluate(el=>getComputedStyle(el).display),'none','Fallback omits decorative title copies')
  await page.locator('.journey-bottom > a').click()
  await page.waitForTimeout(1500)
  assert.ok((await page.locator('#company').boundingBox()).y<900)

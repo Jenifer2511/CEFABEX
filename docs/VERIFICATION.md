@@ -19,3 +19,8 @@ Desktop frames at 0%, 25%, 50% and 85% and mobile frames at 0%, 50% and 85% were
 The adapter uses one fullscreen-triangle draw and no textures or postprocessing. It has a 260k-pixel phone budget and 720k-pixel larger-screen budget, with a further quality reduction after a run of late active frames. It does not run an idle animation loop. Programs, shaders, buffers, vertex arrays, event listeners and observers are disposed or rebuilt at the appropriate lifecycle boundaries.
 
 Chromium uses SwiftShader in this environment. Checks establish behavior, responsive fit and bounded rendering, not a guaranteed physical-device frame rate. No award recognition or hardware performance guarantee is claimed. Source attribution, scroll mapping and retained branding are described in [DESIGN.md](DESIGN.md).
+
+
+## Cinematic name finish
+
+Desktop reveal frames at 62%, 70%, 80%, 90% and 98%, and mobile frames at 70%, 80% and 98%, were inspected. A focused browser check confirmed an unchanged name composition while idle, no mobile overflow and a complete static heading with hidden decorative layers under reduced motion. The Originkit shader is unchanged; the added title effects are driven by the existing scroll timeline.

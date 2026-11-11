@@ -16,7 +16,7 @@ The previous custom 3D metallic title is no longer imported by the application. 
 
 - Enter: “Step into what’s next” introduces the journey; project and skip controls are immediately available.
 - Travel: the introductory copy recedes, leaving the Originkit pattern to carry the movement. A brief “A different perspective” waypoint accompanies the journey.
-- Reveal: the tunnel fades back and the company name arrives as clean, large Geist lettering, followed by the company signature.
+- Reveal: the tunnel fades back and CEFABEX emerges from its vanishing point with perspective/scale travel, staggered letter assembly, two outline echoes and a brief horizontal light streak. A text-clipped silver light sweep completes the name, then the company signature appears.
 
 The name stays hidden until the final phase, except when a static fallback is required. The mobile name stays on one line and the lower controls fit the viewport. Short landscape screens use a shorter stage and smaller opening copy.
 
@@ -35,3 +35,8 @@ The liquid-glass layer remains on navigation, actions, selected panels and the e
 ## Verification limits
 
 Headless Chromium uses software WebGL. Browser checks establish source integration, responsive fit, scrolling, fallback behavior and idle resource use; they do not establish a physical device's GPU frame rate. No award recognition or universal frame-rate guarantee is claimed.
+
+
+## Cinematic name finish
+
+Only the final company-name choreography changed in this revision. The supplied tunnel shader and its scroll mapping are untouched. All title effects share the same reversible ScrollTrigger timeline: there are no autoplay sequences or repeating CSS effects. The heading remains one accessible h1; decorative echo and sheen copies are hidden from assistive technology. The light sweep is clipped to the lettering and runs only during the concluding scroll interval. Reduced motion, GPU failure and forced colors suppress the decorative layers and show a complete, stationary name. No new canvas, dependency or render loop is added.
